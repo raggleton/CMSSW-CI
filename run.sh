@@ -1,6 +1,7 @@
 #!/bin/bash
 
 ls
-which cmsrel
+printenv
 which scram
+which cmsrel
 cmsrel CMSSW_8_0_28
