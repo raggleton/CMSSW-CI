@@ -18,8 +18,7 @@ before_install:
   - sudo service autofs restart
   - sudo cvmfs_config setup
   - sudo mkdir -p /cvmfs/cms.cern.ch
-  - sudo mount -t cvmfs cms.cern.ch /cvmfs/cms.cern.ch
-
+  
 
 install: true
 
