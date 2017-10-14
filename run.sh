@@ -13,6 +13,9 @@ ls /cvmfs/cms.cern.ch/
 export CMSSW_GIT_REFERENCE=/app/cmssw.git
 
 source /cvmfs/cms.cern.ch/cmsset_default.sh
+echo $SCRAM_ARCH
+alias cmsrel
+
 # cmsrel CMSSW_9_2_13
 # cd CMSSW_9_2_13/src
 # cmsenv
