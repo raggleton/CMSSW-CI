@@ -1,6 +1,7 @@
 FROM cern/slc6-base
 WORKDIR /code
 ADD . /code
+USER root
 RUN yum install https://ecsft.cern.ch/dist/cvmfs/cvmfs-release/cvmfs-release-latest.noarch.rpm
 RUN yum install cvmfs cvmfs-config-default
 RUN cvmfs_config setup
