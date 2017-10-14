@@ -12,4 +12,4 @@ install:
   - sudo docker build -t mycmssw -f Dockerfile .
 
 script:
-  - sudo docker run --privileged mycmssw
+  - sudo docker run --privileged -t mycmssw
