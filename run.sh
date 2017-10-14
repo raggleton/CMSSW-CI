@@ -22,7 +22,7 @@ cd CMSSW_8_0_28/src
 cmsenv
 git config --global user.name "Joe Bloggs"
 git config --global user.email "a@b.c"
-git config --global user.github "jjjjjjj"
+git config --global user.github "testUHH"
 
 git cms-addpkg -y --https FWCore/Framework
 scram build
