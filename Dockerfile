@@ -1,6 +1,6 @@
 FROM cern/slc6-base
 
-USER root
+#USER root
 
 RUN yum install -y svn git
 
