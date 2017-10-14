@@ -1,6 +1,7 @@
 #!/bin/bash
 
 ls
+uname
 cat /cvmfs/cms.cern.ch/cmsset_default.sh
 # source /cvmfs/cms.cern.ch/cmsset_default.sh
 # printenv
