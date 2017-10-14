@@ -2,6 +2,7 @@
 
 yum install -y https://ecsft.cern.ch/dist/cvmfs/cvmfs-release/cvmfs-release-latest.noarch.rpm
 yum install -y cvmfs cvmfs-config-default
+yum install -y svn git
 mkdir -p /etc/cvmfs
 cvmfs_config setup
 cp default.local /etc/cvmfs/default.local
