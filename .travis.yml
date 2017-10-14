@@ -9,7 +9,7 @@ before_install:
   - docker pull cern/slc6-base
 
 install:
-  - docker build -t mycmssw -f Dockerfile .
+  - sudo docker build -t mycmssw -f Dockerfile .
 
 script:
-  - docker run --privileged mycmssw
+  - sudo docker run --privileged mycmssw
