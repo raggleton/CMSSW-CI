@@ -5,15 +5,15 @@ language: python
 services:
   - docker
 
-before_install:
-  - docker pull raggleton/mycmssw
+# before_install:
+  # - docker pull raggleton/mycmssw:test
 #   - docker pull cern/slc6-base
 
 # install:
 #   - sudo docker build -t mycmssw -f Dockerfile .
 
 script:
-  - sudo docker run --privileged -t -v $PWD:/app raggleton/mycmssw /bin/bash -c source run.sh
+  - sudo docker run --privileged -t -v $PWD:/app raggleton/mycmssw:test /bin/bash -c source run.sh
 
 # notifications:
 #   email:
