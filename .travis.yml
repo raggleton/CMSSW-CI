@@ -18,7 +18,8 @@ services:
 
 # To use the pre-built image:
 script:
-  - sudo docker run --privileged -t -v $PWD:/app raggleton/mycmssw:test /bin/bash -c "/bin/bash -c source run.sh"
+  - sudo docker run --privileged --name myCI -t -v $PWD:/app -d raggleton/mycmssw:test /bin/bash
+  - sudo docker exec myCI /bin/bash -c "source run.sh"
 
 # notifications:
 #   email:
