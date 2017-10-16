@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# CRUCIAL for cmsrel, etc as aliases not expanded in non-interactive shells
 shopt -s expand_aliases
 
 # SETUP CVMFS FOR CMS
