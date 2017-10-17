@@ -33,8 +33,10 @@ To run it:
 sudo docker run --privileged --name myCI -ti -v $PWD:/app mycmssw
 ```
 
+This will run `run.sh` automatically. If you don't want this to happen, append `/bin/bash` to the command to go into a terminal.
+
 - `--privileged` is required to mount CVMFS correctly.
-- `--name myCI` is to give it a name, so you can refer to it e.g. in `docker exec`.
+- `--name myCI` is to give it a name, so you can refer to it e.g. in `docker exec` or `docker rm`.
 - `-i` is for interactive mode, so you can see what it's doing.
 - `-t` is  to allocate a pseudo-tty.
 - `-v $PWD:/app` maps the current dir to `/app` in the image.
@@ -60,4 +62,7 @@ sudo docker run --privileged --name myCI -ti -v $PWD:/app mycmssw
 
 - CVMFS: https://cernvm.cern.ch/portal/filesystem/quickstart
 
-- 
+## Outstanding issues
+
+- How to run `cmsRun` with files from xrootd? Or too perilous? Maybe host in git LFS?
+
