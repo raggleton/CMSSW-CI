@@ -5,9 +5,9 @@ shopt -s expand_aliases
 
 # SETUP CVMFS FOR CMS
 # -------------------
-# yum install -y svn git
-# yum install -y https://ecsft.cern.ch/dist/cvmfs/cvmfs-release/cvmfs-release-latest.noarch.rpm
-# yum install -y cvmfs cvmfs-config-default
+# yum update -y && yum install -y svn git glib gcc
+# yum update -y && yum install -y https://ecsft.cern.ch/dist/cvmfs/cvmfs-release/cvmfs-release-latest.noarch.rpm
+# yum update -y && yum install -y cvmfs cvmfs-config-default
 # mkdir -p /etc/cvmfs
 cvmfs_config setup
 cp default.local /etc/cvmfs/default.local
@@ -29,5 +29,5 @@ git config --global user.name "Joe Bloggs"
 git config --global user.email "a@b.c"
 git config --global user.github "testUHH"
 
-git cms-addpkg RecoBTag
+git cms-addpkg -y --https RecoBTag
 scram build
