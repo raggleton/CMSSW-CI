@@ -8,3 +8,5 @@ RUN yum install -y svn git glibc gcc; yum clean all
 WORKDIR /app
 
 ADD . /app
+
+CMD ["/bin/bash", "-c", "source run.sh"]

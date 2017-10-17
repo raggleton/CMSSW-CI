@@ -17,8 +17,7 @@ script:
   # - sudo docker run --privileged --name myCI -t -v $PWD:/app -d raggleton/mycmssw:test /bin/bash
   # ad hoc one:
   - sudo docker build -t mycmssw -f Dockerfile .
-  - sudo docker run --privileged --name myCI -t -v $PWD:/app -d mycmssw /bin/bash -c "/app/run.sh"
-  # - sudo docker exec --privileged -t myCI /bin/bash -c "/app/run.sh"
+  - sudo docker run --privileged --name myCI -ti -v $PWD:/app mycmssw
 
 notifications:
   email:
