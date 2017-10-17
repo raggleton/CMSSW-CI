@@ -8,6 +8,7 @@ services:
 # If you want to build it in the CI:
 
 before_install:
+  - export TZ=CET
   - docker version
   - docker pull hepsw/cvmfs-cms
 
