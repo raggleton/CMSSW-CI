@@ -11,10 +11,6 @@ before_install:
   - docker version
   - docker pull hepsw/cvmfs-cms
 
-# install:
-
-# script:
-#   - sudo docker exec --privileged -t myCI /bin/bash -c "source run.sh"
 
 script:
   # To use the pre-built image:
