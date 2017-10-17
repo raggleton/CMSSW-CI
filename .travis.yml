@@ -8,7 +8,8 @@ services:
 # If you want to build it in the CI:
 
 before_install:
-  - docker pull cern/slc6-base
+  # - docker pull cern/slc6-base
+  - docker pull hepsw/cvmfs-cms
 
 # install:
 

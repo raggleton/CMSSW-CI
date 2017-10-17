@@ -1,4 +1,5 @@
-FROM cern/slc6-base
+#FROM cern/slc6-base
+FROM hepsw/cvmfs-cms
 
 RUN yum update -y && yum install -y svn git glibc gcc
 
