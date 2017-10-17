@@ -14,7 +14,7 @@ before_install:
 
 script:
   # To use the pre-built image:
-  # - sudo docker run --privileged --name myCI -t -v $PWD:/app -d raggleton/mycmssw:test /bin/bash
+  # - sudo docker run --privileged --name myCI -ti -v $PWD:/app raggleton/mycmssw:test
   # ad hoc one:
   - sudo docker build -t mycmssw -f Dockerfile .
   - sudo docker run --privileged --name myCI -ti -v $PWD:/app mycmssw
