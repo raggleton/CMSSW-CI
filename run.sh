@@ -11,8 +11,8 @@ source /cvmfs/cms.cern.ch/cmsset_default.sh
 echo $SCRAM_ARCH
 alias cmsrel
 export SCRAM_ARCH="slc6_amd64_gcc530"
-eval `cmsrel CMSSW_8_0_24_patch1`
-cd CMSSW_8_0_24_patch1/src
+eval `cmsrel CMSSW_8_0_28`
+cd CMSSW_8_0_28/src
 eval `scramv1 runtime -sh`
 
 # You can use dummy values here if not pushing, but is required for pulling
@@ -22,8 +22,8 @@ git config --global user.github "testUHH"
 
 # Not necessary for the CMSSW config, but shows it works
 git cms-addpkg -y --https RecoMET/METFilters
-cp /app/test_cfg.py .
-cp /app/ttbar_miniaodsim_summer16_v2_PUMoriond17_80X.root .
+cp ../../test_cfg.py .
+cp ../../ttbar_miniaodsim_summer16_v2_PUMoriond17_80X.root .
 scram build -j9
 cmsRun test_cfg.py
 edmDumpEventContent patTuple.root
