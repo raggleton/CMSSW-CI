@@ -7,19 +7,21 @@ services:
 
 # If you want to build it in the CI:
 
-# before_install:
-#   - docker pull cern/slc6-base
+before_install:
+  - docker pull cern/slc6-base
 
-# install:
-#   - sudo docker build -t mycmssw -f Dockerfile .
+install:
+  - sudo docker build -t mycmssw -f Dockerfile .
 
-# script:
-#   - sudo docker run --privileged -t -v $PWD:/app mycmssw /bin/bash -c "/bin/bash -c source run.sh"
-
-# To use the pre-built image:
 script:
-  - sudo docker run --privileged --name myCI -t -v $PWD:/app -d raggleton/mycmssw:test /bin/bash
-  - sudo docker exec myCI /bin/bash -c "source run.sh"
+  - sudo docker exec --privileged -t myCI /bin/bash -c "source run.sh"
+
+script:
+  # To use the pre-built image:
+  # - sudo docker run --privileged --name myCI -t -v $PWD:/app -d raggleton/mycmssw:test /bin/bash
+  # ad hoc one:
+  - sudo docker run --privileged --name myCI -t -v $PWD:/app -d mycmssw /bin/bash
+  - sudo docker exec --privileged -t myCI /bin/bash -c "source run.sh"
 
 # notifications:
 #   email:

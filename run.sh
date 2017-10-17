@@ -29,5 +29,5 @@ git config --global user.name "Joe Bloggs"
 git config --global user.email "a@b.c"
 git config --global user.github "testUHH"
 
-git cms-addpkg -y --https FWCore/Framework
+git cms-addpkg RecoBTag
 scram build
