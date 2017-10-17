@@ -9,8 +9,7 @@ services:
 
 before_install:
   - docker version
-  - docker pull cern/slc6-base
-  # - docker pull hepsw/cvmfs-cms
+  - docker pull hepsw/cvmfs-cms
 
 # install:
 
