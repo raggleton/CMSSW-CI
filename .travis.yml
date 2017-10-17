@@ -13,8 +13,8 @@ before_install:
 install:
   - sudo docker build -t mycmssw -f Dockerfile .
 
-script:
-  - sudo docker exec --privileged -t myCI /bin/bash -c "source run.sh"
+# script:
+#   - sudo docker exec --privileged -t myCI /bin/bash -c "source run.sh"
 
 script:
   # To use the pre-built image:
