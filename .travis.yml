@@ -11,12 +11,13 @@ before_install:
   - docker version
   - docker pull hepsw/cvmfs-cms
 
-
+install:
+  - sudo docker build -t mycmssw -f Dockerfile .
+  
 script:
   # To use the pre-built image:
   # - sudo docker run --privileged --name myCI -ti -v $PWD:/app raggleton/mycmssw:test
   # ad hoc one:
-  - sudo docker build -t mycmssw -f Dockerfile .
   - sudo docker run --privileged --name myCI -ti -v $PWD:/app mycmssw
 
 notifications:
