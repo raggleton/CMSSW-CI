@@ -39,20 +39,22 @@ This will run `run.sh` automatically. If you don't want this to happen, append `
 - `--name myCI` is to give it a name, so you can refer to it e.g. in `docker exec` or `docker rm`.
 - `-i` is for interactive mode, so you can see what it's doing.
 - `-t` is  to allocate a pseudo-tty.
-- `-v $PWD:/app` maps the current dir to `/app` in the image.
+- `-v $PWD:/app` maps the current dir to `/app` in the image - you can edit on local machine and changes will be shown in container.
 - `mycmssw` is the tag you used in the `build` command above.
+
+In this example, we setup CMSSW, checkout a package, run a simple CMSSW config, and inspect the output file.
+
+**NB** for now, running `cmsRun` doesn't work due to a CVMSFS cofiguration error.
 
 ## Notes
 
 - If you see `Rpmdb checksum is invalid: dCDPT(pkg checksums): openssh-clients.x86_64 0:5.3p1-123.el6_9 - u` when doing `yum install`, you need to first do `yum install -y yum-plugin-ovl`: https://github.com/CentOS/sig-cloud-instance-images/issues/15 -> Nope doesn't work.
 
-- Try appending `; yum clean all` to all yum commands
+- Maybe try appending `; yum clean all` to all yum commands
 
-- Maybe use `rpm --rebuilddb` first as per https://github.com/moby/moby/issues/10180
+- **SOLUTION**: Use `rpm --rebuilddb` first as per https://github.com/moby/moby/issues/10180
 
 - `yum update` will try and update a lot of packages - maybe not worth it/needed?
-
-- Use interactive mode `-i` when doing `docker run` to show what it's doing in Travis.
 
 - You have to set `user.github` to pull from CMS. But a dummy value is OK if you don't need to push.
 

@@ -1,8 +1,6 @@
 FROM hepsw/cvmfs-cms
 
-RUN yum install -y yum-plugin-ovl; yum clean all
-
-RUN yum install -y svn git glibc gcc; yum clean all
+RUN rpm --rebuilddb && yum install -y svn git glibc gcc
 
 WORKDIR /app
 
