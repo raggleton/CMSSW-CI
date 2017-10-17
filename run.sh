@@ -20,5 +20,10 @@ git config --global user.name "Joe Bloggs"
 git config --global user.email "a@b.c"
 git config --global user.github "testUHH"
 
-git cms-addpkg -y --https RecoBTag
+# Not necessary for the CMSSW config, but shows it works
+git cms-addpkg -y --https RecoMET/METFilters
+cp /app/test_cfg.py .
+cp /app/ttbar_miniaodsim_summer16_v2_PUMoriond17_80X.root .
 scram build -j9
+cmsRun test_cfg.py
+edmDumpEventContent patTuple.root
