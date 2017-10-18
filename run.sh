@@ -8,6 +8,8 @@ shopt -s expand_aliases
 
 ls /cvmfs/cms.cern.ch/
 
+WORKDIR="/app"
+
 export CMSSW_GIT_REFERENCE=/app/cmssw.git
 
 svn co https://svn.code.sf.net/p/sframe/code/SFrame/tags/SFrame-04-00-01/ SFrame
@@ -61,3 +63,9 @@ cd $CMSSW_BASE/src
 git clone -b RunII_80X_v3 https://github.com/UHH2/UHH2.git
 cd UHH2
 git clone https://github.com/cms-jet/JECDatabase.git
+
+cd ${WORKDIR}/SFrame
+source setup.sh
+make -j4
+cd ${WORKDIR}/CMSSW_8_0_24_patch1/src/UHH2
+make -j4
