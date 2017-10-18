@@ -28,5 +28,6 @@ git cms-addpkg -y --https RecoMET/METFilters
 cp ../../test_cfg.py .
 cp ../../ttbar_miniaodsim_summer16_v2_PUMoriond17_80X.root .
 scram build -j9
+# This won't work due to Valid site-local-config not found at /cvmfs/cms.cern.ch/SITECONF/local/JobConfig/site-local-config.xml
 cmsRun test_cfg.py
 edmDumpEventContent patTuple.root

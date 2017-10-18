@@ -39,7 +39,7 @@ This will run `run.sh` automatically. If you don't want this to happen, append `
 - `--name myCI` is to give it a name, so you can refer to it e.g. in `docker exec` or `docker rm`.
 - `-i` is for interactive mode, so you can see what it's doing.
 - `-t` is  to allocate a pseudo-tty.
-- `-v $PWD:/app` maps the current dir to `/app` in the image - you can edit on local machine and changes will be shown in container.
+- `-v $PWD:/app` maps the current dir to `/app` in the image - you can edit on local machine and changes will be shown in container. (although doesn't appear to work...)
 - `mycmssw` is the tag you used in the `build` command above.
 
 In this example, we setup CMSSW, checkout a package, run a simple CMSSW config, and inspect the output file.
@@ -66,5 +66,20 @@ In this example, we setup CMSSW, checkout a package, run a simple CMSSW config, 
 
 ## Outstanding issues
 
-- How to run `cmsRun` with files from xrootd? Or too perilous? Maybe host in git LFS?
+- Running `cmsRun` requires the locale to be set in CVMFS, something the site admin usually does. This invovles sym linking `/cvmfs/cms.cern.ch/SITECONF/local` to e.g. `/cvmfs/cms.cern.ch/SITECONF/T2_DE_DESY`. BU tI'm not sure how to do this...
 
+```
+Valid site-local-config not found at /cvmfs/cms.cern.ch/SITECONF/local/JobConfig/site-local-config.xml
+```
+
+See:
+
+- https://twiki.cern.ch/twiki/bin/viewauth/CMS/SWIntTrivial
+- https://sft.its.cern.ch/jira/si/jira.issueviews:issue-html/CVM-313/CVM-313.html
+- https://twiki.cern.ch/twiki/bin/view/CMS/ProdLFNConvention
+- https://hypernews.cern.ch/HyperNews/CMS/get/softwareDistrib/621/1/1.html
+- https://cdcvs.fnal.gov/redmine/issues/10319
+- https://twiki.cern.ch/twiki/bin/view/Main/GenericFileMonitoring
+- http://www.hep.ph.ic.ac.uk/~dbauer/cloud/logs/doc/geolist.txt
+- https://twiki.cern.ch/twiki/bin/view/CMSPublic/T2_CH_CERN_siteconf
+- https://twiki.cern.ch/twiki/bin/view/CMSPublic/SiteConfInGitlab
