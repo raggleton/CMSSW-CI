@@ -38,6 +38,7 @@ eval `scramv1 runtime -sh`
 cd ${WORKDIR}
 time source setup_fastjet.sh
 
+cd CMSSW_8_0_24_patch1/src
 git cms-init -y
 git cms-merge-topic -u cms-met:fromCMSSW_8_0_20_postICHEPfilter
 git cms-merge-topic gkasieczka:test-httv2-8014
