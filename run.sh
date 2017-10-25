@@ -40,12 +40,12 @@ export SCRAM_ARCH=slc6_amd64_gcc530
 eval `cmsrel CMSSW_8_0_24_patch1`
 cd CMSSW_8_0_24_patch1/src
 eval `scramv1 runtime -sh`
-git cms-init -y
 
 cd ${WORKDIR}
-source setup_fastjet.sh
+time source setup_fastjet.sh
 exit
 
+git cms-init -y
 git cms-merge-topic -u cms-met:fromCMSSW_8_0_20_postICHEPfilter
 git cms-merge-topic gkasieczka:test-httv2-8014
 git cms-merge-topic ikrav:egm_id_80X_v2
