@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 # Print command before executing it - easier for looking at logs
 set -o xtrace
