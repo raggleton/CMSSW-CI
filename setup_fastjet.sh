@@ -14,7 +14,7 @@ make install
 
 cd ..
 # Add fastjet-config to PATH
-export PATH=`pwd`/${FJINSTALLDIR}:$PATH
+export PATH=`pwd`/${FJINSTALLDIR}/bin:$PATH
 
 # Test fastjet
 ls
