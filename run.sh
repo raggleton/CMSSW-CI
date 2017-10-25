@@ -29,15 +29,18 @@ time source setup_sframe.sh
 # cmsRun test_cfg.py
 # edmDumpEventContent patTuple.root
 
+# Get a CMSSW release
 source /cvmfs/cms.cern.ch/cmsset_default.sh
 export SCRAM_ARCH=slc6_amd64_gcc530
 eval `cmsrel CMSSW_8_0_24_patch1`
 cd CMSSW_8_0_24_patch1/src
 eval `scramv1 runtime -sh`
 
+# Setup custom FastJet
 cd ${WORKDIR}
 time source setup_fastjet.sh
 
+# Now setup all packages, etc
 cd CMSSW_8_0_24_patch1/src
 git cms-init -y
 git cms-merge-topic -u cms-met:fromCMSSW_8_0_20_postICHEPfilter
@@ -64,6 +67,7 @@ git clone -b RunII_80X_v3 https://github.com/UHH2/UHH2.git
 cd UHH2
 git clone https://github.com/cms-jet/JECDatabase.git
 
+# Compile SFrame and UHH
 cd ${WORKDIR}/SFrame
 source setup.sh
 make -j4
