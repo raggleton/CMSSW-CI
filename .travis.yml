@@ -1,6 +1,6 @@
 sudo: required
 
-language: c++
+language: generic
 
 services:
   - docker
