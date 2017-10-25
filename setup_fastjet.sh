@@ -1,4 +1,7 @@
 #!/bin/bash -e
+
+export MAKEFLAGS="-j $(grep -c ^processor /proc/cpuinfo)"
+
 # Setup fastjet & fastjet-contrib
 # NB use curl not wget as curl available by cvmfs, wget isnt
 FJVER="3.2.1"
@@ -8,7 +11,7 @@ tar xzf fastjet-${FJVER}.tar.gz
 mkdir ${FJINSTALLDIR}
 cd fastjet-${FJVER}    
 ./configure --prefix=`pwd`/../${FJINSTALLDIR}/
-make -j4
+make $MAKEFLAGS
 make check
 make install
 
@@ -28,7 +31,7 @@ tar xzf fjcontrib-${FJCONTRIBVER}.tar.gz
 cd fjcontrib-${FJCONTRIBVER}
 # ./configure --fastjet-config=`pwd`/../${FJINSTALLDIR}/bin/fastjet-config
 ./configure
-make -j4
+make $MAKEFLAGS
 make check
 make install
 cd ..

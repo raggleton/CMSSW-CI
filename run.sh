@@ -13,6 +13,9 @@ WORKDIR="/app"
 
 export CMSSW_GIT_REFERENCE=/app/cmssw.git
 
+# Get number of processors
+export MAKEFLAGS="-j $(grep -c ^processor /proc/cpuinfo)"
+
 # You can use dummy values here if not pushing, but is required for pulling
 git config --global user.name "Joe Bloggs"
 git config --global user.email "a@b.c"
@@ -58,7 +61,7 @@ sed -i "s|/cvmfs/cms.cern.ch/slc6_amd64_gcc530/external/fastjet-contrib/1.030|$F
 sed -i "s|3.1.0|3.2.1|g" $CMSSW_BASE/config/toolbox/slc6_amd64_gcc530/tools/selected/fastjet.xml
 sed -i "s|/cvmfs/cms.cern.ch/slc6_amd64_gcc530/external/fastjet/3.2.1|$FJINSTALL|g" $CMSSW_BASE/config/toolbox/slc6_amd64_gcc530/tools/selected/fastjet.xml
 scram b clean
-scram b -j 20
+scram b $MAKEFLAGS
 cd $CMSSW_BASE/external
 cd slc6_amd64_gcc530/
 git clone https://github.com/ikrav/RecoEgamma-ElectronIdentification.git data/RecoEgamma/ElectronIdentification/data
@@ -72,6 +75,6 @@ git clone https://github.com/cms-jet/JECDatabase.git
 # Compile SFrame and UHH
 cd ${WORKDIR}/SFrame
 source setup.sh
-make -j4
+make $MAKEFLAGS
 cd ${WORKDIR}/CMSSW_8_0_24_patch1/src/UHH2
-make -j4
+make $MAKEFLAGS
