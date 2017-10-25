@@ -50,8 +50,8 @@ git cms-init -y
 git cms-merge-topic -u cms-met:fromCMSSW_8_0_20_postICHEPfilter
 git cms-merge-topic gkasieczka:test-httv2-8014
 git cms-merge-topic ikrav:egm_id_80X_v2
-git-cms-addpkg RecoBTag
-git-cms-addpkg PhysicsTools
+# git-cms-addpkg RecoBTag
+# git-cms-addpkg PhysicsTools
 
 FJINSTALL=`fastjet-config --prefix`
 sed -i "s|use_common_bge_for_rho_and_rhom|set_common_bge_for_rho_and_rhom|g" RecoJets/JetProducers/plugins/FastjetJetProducer.cc
