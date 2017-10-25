@@ -6,26 +6,19 @@ set -o xtrace
 # CRUCIAL for cmsrel, etc as aliases not expanded in non-interactive shells
 shopt -s expand_aliases
 
+# Check CVMSFS setup correctly
 ls /cvmfs/cms.cern.ch/
 
 WORKDIR="/app"
 
 export CMSSW_GIT_REFERENCE=/app/cmssw.git
 
-# svn co https://svn.code.sf.net/p/sframe/code/SFrame/tags/SFrame-04-00-01/ SFrame
-
-# source /cvmfs/cms.cern.ch/cmsset_default.sh
-# echo $SCRAM_ARCH
-# alias cmsrel
-# export SCRAM_ARCH="slc6_amd64_gcc530"
-# eval `cmsrel CMSSW_8_0_28`
-# cd CMSSW_8_0_28/src
-# eval `scramv1 runtime -sh`
-
 # You can use dummy values here if not pushing, but is required for pulling
 git config --global user.name "Joe Bloggs"
 git config --global user.email "a@b.c"
 git config --global user.github "testUHH"
+
+time source setup_sframe.sh
 
 # # Not necessary for the CMSSW config, but shows it works
 # git cms-addpkg -y --https RecoMET/METFilters
@@ -35,6 +28,7 @@ git config --global user.github "testUHH"
 # # This won't work due to Valid site-local-config not found at /cvmfs/cms.cern.ch/SITECONF/local/JobConfig/site-local-config.xml
 # cmsRun test_cfg.py
 # edmDumpEventContent patTuple.root
+
 source /cvmfs/cms.cern.ch/cmsset_default.sh
 export SCRAM_ARCH=slc6_amd64_gcc530
 eval `cmsrel CMSSW_8_0_24_patch1`
@@ -43,7 +37,6 @@ eval `scramv1 runtime -sh`
 
 cd ${WORKDIR}
 time source setup_fastjet.sh
-exit
 
 git cms-init -y
 git cms-merge-topic -u cms-met:fromCMSSW_8_0_20_postICHEPfilter
