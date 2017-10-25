@@ -11,7 +11,7 @@ ls /cvmfs/cms.cern.ch/
 
 WORKDIR="/app"
 
-export CMSSW_GIT_REFERENCE=/app/cmssw.git
+export CMSSW_GIT_REFERENCE=$WORKDIR/cmssw.git
 
 # Get number of processors
 export MAKEFLAGS="-j $(grep -c ^processor /proc/cpuinfo)"
@@ -35,8 +35,9 @@ time source setup_sframe.sh
 # Get a CMSSW release
 source /cvmfs/cms.cern.ch/cmsset_default.sh
 export SCRAM_ARCH=slc6_amd64_gcc530
-eval `cmsrel CMSSW_8_0_24_patch1`
-cd CMSSW_8_0_24_patch1/src
+CMSSW_VERSION=CMSSW_8_0_24_patch1
+eval `cmsrel $CMSSW_VERSION`
+cd $CMSSW_VERSION/src
 eval `scramv1 runtime -sh`
 
 # Setup custom FastJet
@@ -44,7 +45,7 @@ cd ${WORKDIR}
 time source setup_fastjet.sh
 
 # Now setup all packages, etc
-cd CMSSW_8_0_24_patch1/src
+cd $CMSSW_VERSION/src
 git cms-init -y
 git cms-merge-topic -u cms-met:fromCMSSW_8_0_20_postICHEPfilter
 git cms-merge-topic gkasieczka:test-httv2-8014
@@ -55,15 +56,14 @@ git-cms-addpkg PhysicsTools
 FJINSTALL=`fastjet-config --prefix`
 sed -i "s|use_common_bge_for_rho_and_rhom|set_common_bge_for_rho_and_rhom|g" RecoJets/JetProducers/plugins/FastjetJetProducer.cc
 # Fix fastjet contrib
-sed -i "s|1.020|1.030|g" $CMSSW_BASE/config/toolbox/slc6_amd64_gcc530/tools/selected/fastjet-contrib.xml
-sed -i "s|/cvmfs/cms.cern.ch/slc6_amd64_gcc530/external/fastjet-contrib/1.030|$FJINSTALL|g" $CMSSW_BASE/config/toolbox/slc6_amd64_gcc530/tools/selected/fastjet-contrib.xml
+sed -i "s|1.020|1.030|g" $CMSSW_BASE/config/toolbox/$SCRAM_ARCH/tools/selected/fastjet-contrib.xml
+sed -i "s|/cvmfs/cms.cern.ch/$SCRAM_ARCH/external/fastjet-contrib/1.030|$FJINSTALL|g" $CMSSW_BASE/config/toolbox/$SCRAM_ARCH/tools/selected/fastjet-contrib.xml
 # Fix Fastjet
-sed -i "s|3.1.0|3.2.1|g" $CMSSW_BASE/config/toolbox/slc6_amd64_gcc530/tools/selected/fastjet.xml
-sed -i "s|/cvmfs/cms.cern.ch/slc6_amd64_gcc530/external/fastjet/3.2.1|$FJINSTALL|g" $CMSSW_BASE/config/toolbox/slc6_amd64_gcc530/tools/selected/fastjet.xml
+sed -i "s|3.1.0|3.2.1|g" $CMSSW_BASE/config/toolbox/$SCRAM_ARCH/tools/selected/fastjet.xml
+sed -i "s|/cvmfs/cms.cern.ch/$SCRAM_ARCH/external/fastjet/3.2.1|$FJINSTALL|g" $CMSSW_BASE/config/toolbox/$SCRAM_ARCH/tools/selected/fastjet.xml
 scram b clean
 scram b $MAKEFLAGS
-cd $CMSSW_BASE/external
-cd slc6_amd64_gcc530/
+cd $CMSSW_BASE/external/$SCRAM_ARCH/
 git clone https://github.com/ikrav/RecoEgamma-ElectronIdentification.git data/RecoEgamma/ElectronIdentification/data
 cd data/RecoEgamma/ElectronIdentification/data
 git checkout egm_id_80X_v1
@@ -76,5 +76,5 @@ git clone https://github.com/cms-jet/JECDatabase.git
 cd ${WORKDIR}/SFrame
 source setup.sh
 make $MAKEFLAGS
-cd ${WORKDIR}/CMSSW_8_0_24_patch1/src/UHH2
+cd $CMSSW_BASE/src/UHH2
 make $MAKEFLAGS
