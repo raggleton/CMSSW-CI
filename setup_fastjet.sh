@@ -4,7 +4,7 @@
 FJVER="3.2.2"
 FJINSTALLDIR="fastjet-install"
 curl -O http://fastjet.fr/repo/fastjet-${FJVER}.tar.gz
-tar xvzf fastjet-${FJVER}.tar.gz
+tar xzf fastjet-${FJVER}.tar.gz
 mkdir ${FJINSTALLDIR}
 cd fastjet-${FJVER}    
 ./configure --prefix=`pwd`/../${FJINSTALLDIR}/
@@ -20,7 +20,7 @@ g++ short-example.cc -o short-example `fastjet-config --cxxflags --libs --plugin
 
 FJCONTRIBVER="1.030"
 curl -O http://fastjet.hepforge.org/contrib/downloads/fjcontrib-${FJCONTRIBVER}.tar.gz
-tar xvzf fjcontrib-${FJCONTRIBVER}.tar.gz
+tar xzf fjcontrib-${FJCONTRIBVER}.tar.gz
 cd fjcontrib-${FJCONTRIBVER}
 ./configure --fastjet-config=`pwd`/../${FJINSTALLDIR}/bin/fastjet-config
 make
