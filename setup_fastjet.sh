@@ -8,7 +8,7 @@ tar xzf fastjet-${FJVER}.tar.gz
 mkdir ${FJINSTALLDIR}
 cd fastjet-${FJVER}    
 ./configure --prefix=`pwd`/../${FJINSTALLDIR}/
-make
+make -j4
 make check
 make install
 
@@ -28,7 +28,7 @@ tar xzf fjcontrib-${FJCONTRIBVER}.tar.gz
 cd fjcontrib-${FJCONTRIBVER}
 # ./configure --fastjet-config=`pwd`/../${FJINSTALLDIR}/bin/fastjet-config
 ./configure
-make
+make -j4
 make check
 make install
 cd ..
