@@ -1,7 +1,7 @@
 #!/bin/bash -e
 # Setup fastjet & fastjet-contrib
 # NB use curl not wget as curl available by cvmfs, wget isnt
-FJVER="3.2.2"
+FJVER="3.2.1"
 FJINSTALLDIR="fastjet-install"
 curl -O http://fastjet.fr/repo/fastjet-${FJVER}.tar.gz
 tar xzf fastjet-${FJVER}.tar.gz
