@@ -13,6 +13,10 @@ make check
 make install
 
 cd ..
+# Add fastjet-config to PATH
+export PATH=`pwd`/${FJINSTALLDIR}:$PATH
+
+# Test fastjet
 ls
 g++ short-example.cc -o short-example `fastjet-config --cxxflags --libs --plugins`
 ./short-example
@@ -22,9 +26,10 @@ FJCONTRIBVER="1.030"
 curl -O http://fastjet.hepforge.org/contrib/downloads/fjcontrib-${FJCONTRIBVER}.tar.gz
 tar xzf fjcontrib-${FJCONTRIBVER}.tar.gz
 cd fjcontrib-${FJCONTRIBVER}
-./configure --fastjet-config=`pwd`/../${FJINSTALLDIR}/bin/fastjet-config
+# ./configure --fastjet-config=`pwd`/../${FJINSTALLDIR}/bin/fastjet-config
+./configure
 make
 make check
 make install
-
+cd ..
 
