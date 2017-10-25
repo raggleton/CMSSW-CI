@@ -14,7 +14,7 @@ make install
 
 cd ..
 ls
-g++ short-example.cc -o short-example `${FJINSTALLDIR}/bin/fastjet-config --cxxflags --libs -plugins`
+g++ short-example.cc -o short-example `fastjet-config --cxxflags --libs --plugins`
 ./short-example
 
 
