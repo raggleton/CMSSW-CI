@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 # Setup fastjet & fastjet-contrib
 # NB use curl not wget as curl available by cvmfs, wget isnt
 FJVER="3.2.2"
