@@ -12,7 +12,7 @@ WORKDIR="/app"
 
 export CMSSW_GIT_REFERENCE=/app/cmssw.git
 
-svn co https://svn.code.sf.net/p/sframe/code/SFrame/tags/SFrame-04-00-01/ SFrame
+# svn co https://svn.code.sf.net/p/sframe/code/SFrame/tags/SFrame-04-00-01/ SFrame
 
 # source /cvmfs/cms.cern.ch/cmsset_default.sh
 # echo $SCRAM_ARCH
@@ -41,6 +41,11 @@ eval `cmsrel CMSSW_8_0_24_patch1`
 cd CMSSW_8_0_24_patch1/src
 eval `scramv1 runtime -sh`
 git cms-init -y
+
+cd ${WORKDIR}
+source setup_fastjet.sh
+exit
+
 git cms-merge-topic -u cms-met:fromCMSSW_8_0_20_postICHEPfilter
 git cms-merge-topic gkasieczka:test-httv2-8014
 git cms-merge-topic ikrav:egm_id_80X_v2
