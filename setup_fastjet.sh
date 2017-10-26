@@ -4,7 +4,7 @@ export MAKEFLAGS="-j $(grep -c ^processor /proc/cpuinfo)"
 
 # Setup fastjet & fastjet-contrib
 # NB use curl not wget as curl available by cvmfs, wget isnt
-FJVER="3.2.1"
+export FJVER="3.2.1"
 FJINSTALLDIR="fastjet-install"
 curl -O http://fastjet.fr/repo/fastjet-${FJVER}.tar.gz
 tar xzf fastjet-${FJVER}.tar.gz
@@ -25,7 +25,7 @@ g++ short-example.cc -o short-example `fastjet-config --cxxflags --libs --plugin
 ./short-example
 
 
-FJCONTRIBVER="1.030"
+export FJCONTRIBVER="1.025"
 curl -O http://fastjet.hepforge.org/contrib/downloads/fjcontrib-${FJCONTRIBVER}.tar.gz
 tar xzf fjcontrib-${FJCONTRIBVER}.tar.gz
 cd fjcontrib-${FJCONTRIBVER}

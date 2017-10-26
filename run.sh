@@ -56,13 +56,20 @@ git cms-merge-topic ikrav:egm_id_80X_v2
 FJINSTALL=`fastjet-config --prefix`
 sed -i "s|use_common_bge_for_rho_and_rhom|set_common_bge_for_rho_and_rhom|g" RecoJets/JetProducers/plugins/FastjetJetProducer.cc
 # Fix fastjet contrib
-sed -i "s|1.020|1.030|g" $CMSSW_BASE/config/toolbox/$SCRAM_ARCH/tools/selected/fastjet-contrib.xml
-sed -i "s|/cvmfs/cms.cern.ch/$SCRAM_ARCH/external/fastjet-contrib/1.030|$FJINSTALL|g" $CMSSW_BASE/config/toolbox/$SCRAM_ARCH/tools/selected/fastjet-contrib.xml
+# versions are defined in setup_fastjet.sh
+FJCONTRIBVER="1.025"
+FJCONFIG_TOOL_FILE=$CMSSW_BASE/config/toolbox/$SCRAM_ARCH/tools/selected/fastjet-contrib.xml
+sed -i "s|1.020|$FJCONTRIBVER|g" FJCONFIG_TOOL_FILE
+sed -i "s|/cvmfs/cms.cern.ch/$SCRAM_ARCH/external/fastjet-contrib/$FJCONTRIBVER|$FJINSTALL|g" FJCONFIG_TOOL_FILE
+
 # Fix Fastjet
-sed -i "s|3.1.0|3.2.1|g" $CMSSW_BASE/config/toolbox/$SCRAM_ARCH/tools/selected/fastjet.xml
-sed -i "s|/cvmfs/cms.cern.ch/$SCRAM_ARCH/external/fastjet/3.2.1|$FJINSTALL|g" $CMSSW_BASE/config/toolbox/$SCRAM_ARCH/tools/selected/fastjet.xml
+FJVER=`fastjet-config --version`
+FJ_TOOL_FILE=$CMSSW_BASE/config/toolbox/$SCRAM_ARCH/tools/selected/fastjet.xml
+sed -i "s|3.1.0|$FJVER|g" FJ_TOOL_FILE
+sed -i "s|/cvmfs/cms.cern.ch/$SCRAM_ARCH/external/fastjet/$FJVER|$FJINSTALL|g" FJ_TOOL_FILE
 scram b clean
 scram b $MAKEFLAGS
+
 cd $CMSSW_BASE/external/$SCRAM_ARCH/
 git clone https://github.com/ikrav/RecoEgamma-ElectronIdentification.git data/RecoEgamma/ElectronIdentification/data
 cd data/RecoEgamma/ElectronIdentification/data
