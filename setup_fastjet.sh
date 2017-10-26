@@ -29,10 +29,12 @@ FJCONTRIBVER="1.030"
 curl -O http://fastjet.hepforge.org/contrib/downloads/fjcontrib-${FJCONTRIBVER}.tar.gz
 tar xzf fjcontrib-${FJCONTRIBVER}.tar.gz
 cd fjcontrib-${FJCONTRIBVER}
-# ./configure --fastjet-config=`pwd`/../${FJINSTALLDIR}/bin/fastjet-config
-./configure
+# although we add fastjet-config to path, due to a bug explicitly stating this ensure the necessary fragile library gets built 
+./configure --fastjet-config=`pwd`/../${FJINSTALLDIR}/bin/fastjet-config CXXFLAGS=-fPIC
 make $MAKEFLAGS
 make check
 make install
+make fragile-shared
+make fragile-shared-install
 cd ..
 
