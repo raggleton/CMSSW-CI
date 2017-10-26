@@ -9,7 +9,7 @@ shopt -s expand_aliases
 # Check CVMSFS setup correctly
 ls /cvmfs/cms.cern.ch/
 
-WORKDIR="/app"
+WORKDIR=`pwd`
 
 export CMSSW_GIT_REFERENCE=$WORKDIR/cmssw.git
 
