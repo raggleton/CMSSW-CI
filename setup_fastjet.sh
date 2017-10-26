@@ -10,7 +10,7 @@ curl -O http://fastjet.fr/repo/fastjet-${FJVER}.tar.gz
 tar xzf fastjet-${FJVER}.tar.gz
 mkdir ${FJINSTALLDIR}
 cd fastjet-${FJVER}    
-./configure --prefix=`pwd`/../${FJINSTALLDIR}/
+./configure --prefix=`pwd`/../${FJINSTALLDIR}/ --enable-allplugins --enable-allcxxplugins CXXFLAGS=-fPIC
 make $MAKEFLAGS
 make check
 make install
