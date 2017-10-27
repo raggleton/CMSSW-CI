@@ -9,6 +9,7 @@ shopt -s expand_aliases
 # Check CVMSFS setup correctly
 ls /cvmfs/cms.cern.ch/
 
+# Store top location
 WORKDIR=`pwd`
 
 export CMSSW_GIT_REFERENCE=$WORKDIR/cmssw.git
@@ -21,16 +22,7 @@ git config --global user.name "Joe Bloggs"
 git config --global user.email "a@b.c"
 git config --global user.github "testUHH"
 
-time source setup_sframe.sh
-
-# # Not necessary for the CMSSW config, but shows it works
-# git cms-addpkg -y --https RecoMET/METFilters
-# cp ../../test_cfg.py .
-# cp ../../ttbar_miniaodsim_summer16_v2_PUMoriond17_80X.root .
-# scram build -j9
-# # This won't work due to Valid site-local-config not found at /cvmfs/cms.cern.ch/SITECONF/local/JobConfig/site-local-config.xml
-# cmsRun test_cfg.py
-# edmDumpEventContent patTuple.root
+# time source setup_sframe.sh
 
 # Get a CMSSW release
 source /cvmfs/cms.cern.ch/cmsset_default.sh
@@ -39,6 +31,17 @@ CMSSW_VERSION=CMSSW_8_0_24_patch1
 eval `cmsrel $CMSSW_VERSION`
 cd $CMSSW_VERSION/src
 eval `scramv1 runtime -sh`
+
+# # Not necessary for the CMSSW config, but shows it works
+git cms-addpkg -y --https RecoMET/METFilters
+cp ../../test_cfg.py .
+cp ../../ttbar_miniaodsim_summer16_v2_PUMoriond17_80X.root .
+scram build -j9
+# This won't work due to Valid site-local-config not found at /cvmfs/cms.cern.ch/SITECONF/local/JobConfig/site-local-config.xml
+cmsRun test_cfg.py
+edmDumpEventContent patTuple.root
+
+exit
 
 # Setup custom FastJet
 cd ${WORKDIR}
@@ -51,6 +54,7 @@ git cms-merge-topic -u cms-met:fromCMSSW_8_0_20_postICHEPfilter
 # why this? why not gregor's PR? https://github.com/cms-sw/cmssw/pull/14837
 git cms-merge-topic gkasieczka:test-httv2-8014
 git cms-merge-topic ikrav:egm_id_80X_v2
+# Do we actually need these?
 # git-cms-addpkg RecoBTag
 # git-cms-addpkg PhysicsTools
 
