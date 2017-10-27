@@ -3,6 +3,7 @@ myjob:
     - cvmfs
 
   script:
+    - which git
     - ls /cvmfs/cms.cern.ch/
     - source /cvmfs/cms.cern.ch/cmsset_default.sh
     - export SCRAM_ARCH=slc6_amd64_gcc530
