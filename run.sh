@@ -14,8 +14,9 @@ cp cms.cern.ch.local /etc/cvmfs/config.d/cms.cern.ch.local
 mkdir -p /etc/cvmfs/
 cp default.local /etc/cvmfs/default.local
 # service autofs restart
+cvmfs_config reload
 cvmfs_config setup
-cvmfs_config chksetup
+# cvmfs_config chksetup
 # test this actually links
 ls -l /cvmfs/cms.cern.ch/SITECONF/local/
 
