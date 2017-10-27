@@ -1,7 +1,7 @@
 before_script:
   - yum install -y sudo
   - sudo yum install -y https://ecsft.cern.ch/dist/cvmfs/cvmfs-release/cvmfs-release-latest.noarch.rpm
-  - sudo yum update -y && sudo yum install -y cvmfs cvmfs-config-default
+  - sudo yum update -y && sudo yum install -y cvmfs-config-default
 
 myjob:
   tags:
