@@ -8,18 +8,21 @@ shopt -s expand_aliases
 
 # Check CVMSFS setup correctly
 # Need to manually setup STIECONF as we're not a proper site
-ls /cvmfs/cms.cern.ch/
+
+# ls /cvmfs/cms.cern.ch/
+sudo mkdir -p /cvmfs/cms.cern.ch
 mkdir -p /etc/cvmfs/config.d/
 cp default.local /etc/cvmfs/default.local
 cp cms.cern.ch.local /etc/cvmfs/config.d/cms.cern.ch.local
 # service autofs restart
-cvmfs_config reload
+# cvmfs_config reload
 cvmfs_config setup
 # cvmfs_config chksetup
 # test this actually links
-ls -l /cvmfs/cms.cern.ch/SITECONF/local/
-ls /cvmfs/cms.cern.ch/
+sudo mount -t cvmfs cms.cern.ch /cvmfs/cms.cern.ch
 
+ls /cvmfs/cms.cern.ch/
+ls -l /cvmfs/cms.cern.ch/SITECONF/local/
 
 # Store top location
 WORKDIR=`pwd`
