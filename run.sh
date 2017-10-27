@@ -15,7 +15,10 @@ WORKDIR=`pwd`
 export CMSSW_GIT_REFERENCE=$WORKDIR/cmssw.git
 
 # Get number of processors
-export MAKEFLAGS="-j $(grep -c ^processor /proc/cpuinfo)"
+# np=$(grep -c ^processor /proc/cpuinfo)
+# let np/=2
+# export MAKEFLAGS="-j $(grep -c ^processor /proc/cpuinfo)"
+export MAKEFLAGS="-j2"
 
 # You can use dummy values here if not pushing, but is required for pulling
 git config --global user.name "Joe Bloggs"
@@ -36,7 +39,7 @@ git cms-init -y
 git cms-merge-topic -u cms-met:fromCMSSW_8_0_20_postICHEPfilter
 cp ../../test_cfg.py .
 cp ../../ttbar_miniaodsim_summer16_v2_PUMoriond17_80X.root .
-scram build -j9
+scram build $MAKEFLAGS
 # This won't work due to Valid site-local-config not found at /cvmfs/cms.cern.ch/SITECONF/local/JobConfig/site-local-config.xml
 cmsRun test_cfg.py
 edmDumpEventContent patTuple.root
@@ -50,6 +53,7 @@ time source setup_fastjet.sh
 # Now setup all packages, etc
 cd $CMSSW_VERSION/src
 git cms-init -y
+# Additional MET filters
 git cms-merge-topic -u cms-met:fromCMSSW_8_0_20_postICHEPfilter
 # why this? why not gregor's PR? https://github.com/cms-sw/cmssw/pull/14837
 git cms-merge-topic gkasieczka:test-httv2-8014
