@@ -1,6 +1,8 @@
+"""This does nothing except select the EDM collections with "slimmedJets" in their name"""
+
 import FWCore.ParameterSet.Config as cms
 
-process = cms.Process("TravisTest")
+process = cms.Process("MyTest")
 
 process.options = cms.untracked.PSet(wantSummary = cms.untracked.bool(True))
 process.options.allowUnscheduled = cms.untracked.bool(False) 
