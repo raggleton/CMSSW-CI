@@ -32,8 +32,8 @@ eval `cmsrel $CMSSW_VERSION`
 cd $CMSSW_VERSION/src
 eval `scramv1 runtime -sh`
 
-# # Not necessary for the CMSSW config, but shows it works
-git cms-addpkg -y --https RecoMET/METFilters
+git cms-init -y
+git cms-merge-topic -u cms-met:fromCMSSW_8_0_20_postICHEPfilter
 cp ../../test_cfg.py .
 cp ../../ttbar_miniaodsim_summer16_v2_PUMoriond17_80X.root .
 scram build -j9
