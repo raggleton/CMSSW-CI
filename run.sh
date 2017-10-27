@@ -48,6 +48,7 @@ time source setup_fastjet.sh
 cd $CMSSW_VERSION/src
 git cms-init -y
 git cms-merge-topic -u cms-met:fromCMSSW_8_0_20_postICHEPfilter
+# why this? why not gregor's PR? https://github.com/cms-sw/cmssw/pull/14837
 git cms-merge-topic gkasieczka:test-httv2-8014
 git cms-merge-topic ikrav:egm_id_80X_v2
 # git-cms-addpkg RecoBTag
@@ -55,18 +56,19 @@ git cms-merge-topic ikrav:egm_id_80X_v2
 
 FJINSTALL=`fastjet-config --prefix`
 sed -i "s|use_common_bge_for_rho_and_rhom|set_common_bge_for_rho_and_rhom|g" RecoJets/JetProducers/plugins/FastjetJetProducer.cc
+
 # Fix fastjet contrib
 # versions are defined in setup_fastjet.sh
 FJCONTRIBVER="1.025"
 FJCONFIG_TOOL_FILE=$CMSSW_BASE/config/toolbox/$SCRAM_ARCH/tools/selected/fastjet-contrib.xml
-sed -i "s|1.020|$FJCONTRIBVER|g" FJCONFIG_TOOL_FILE
-sed -i "s|/cvmfs/cms.cern.ch/$SCRAM_ARCH/external/fastjet-contrib/$FJCONTRIBVER|$FJINSTALL|g" FJCONFIG_TOOL_FILE
+sed -i "s|1.020|$FJCONTRIBVER|g" $FJCONFIG_TOOL_FILE
+sed -i "s|/cvmfs/cms.cern.ch/$SCRAM_ARCH/external/fastjet-contrib/$FJCONTRIBVER|$FJINSTALL|g" $FJCONFIG_TOOL_FILE
 
 # Fix Fastjet
 FJVER=`fastjet-config --version`
 FJ_TOOL_FILE=$CMSSW_BASE/config/toolbox/$SCRAM_ARCH/tools/selected/fastjet.xml
-sed -i "s|3.1.0|$FJVER|g" FJ_TOOL_FILE
-sed -i "s|/cvmfs/cms.cern.ch/$SCRAM_ARCH/external/fastjet/$FJVER|$FJINSTALL|g" FJ_TOOL_FILE
+sed -i "s|3.1.0|$FJVER|g" $FJ_TOOL_FILE
+sed -i "s|/cvmfs/cms.cern.ch/$SCRAM_ARCH/external/fastjet/$FJVER|$FJINSTALL|g" $FJ_TOOL_FILE
 scram b clean
 scram b $MAKEFLAGS
 
