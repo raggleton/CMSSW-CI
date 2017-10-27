@@ -7,7 +7,14 @@ set -o xtrace
 shopt -s expand_aliases
 
 # Check CVMSFS setup correctly
+# Need to manually setup STIECONF as we're not a proper site
 ls /cvmfs/cms.cern.ch/
+cp cms.cern.ch.local /etc/cvmfs/config.d/cms.cern.ch.local
+cp default.local /etc/cvmfs/default.local
+service autofs restart
+cvmfs_config setup
+cvmfs_config chksetup
+
 
 # Store top location
 WORKDIR=`pwd`

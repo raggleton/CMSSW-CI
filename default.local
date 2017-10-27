@@ -1,0 +1,3 @@
+# Repositories: cms.cern.ch is vital for CMS, grid.cern.ch provides a Grid-UI and is a recommended addition
+CVMFS_REPOSITORIES=cms.cern.ch,grid.cern.ch,sft.cern.ch
+CVMFS_HTTP_PROXY="DIRECT"
