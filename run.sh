@@ -48,8 +48,8 @@ eval `cmsrel $CMSSW_VERSION`
 cd $CMSSW_VERSION/src
 eval `scramv1 runtime -sh`
 
-git cms-init -y
-git cms-merge-topic -u cms-met:fromCMSSW_8_0_20_postICHEPfilter
+# git cms-init -y
+# git cms-merge-topic -u cms-met:fromCMSSW_8_0_20_postICHEPfilter
 cp $WORKDIR/test_cfg.py .
 cp $WORKDIR/ttbar_miniaodsim_summer16_v2_PUMoriond17_80X.root .
 scram build $MAKEFLAGS
