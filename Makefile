@@ -8,4 +8,4 @@ USERLDFLAGS := -Wl,-rpath,${FJLIB} -lm -L${FJLIB} -lfastjettools -lfastjet -lHOT
 USERCXXFLAGS := -I${FJINC}
 
 TEST := 1
-# TESTPAR := 1
+TESTPAR := 1
