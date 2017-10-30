@@ -90,17 +90,15 @@ sed -i "s|use_common_bge_for_rho_and_rhom|set_common_bge_for_rho_and_rhom|g" Rec
 FJCONTRIBVER="1.025"
 FJCONFIG_TOOL_FILE=$CMSSW_BASE/config/toolbox/$SCRAM_ARCH/tools/selected/fastjet-contrib.xml
 sed -i "s|1.020|$FJCONTRIBVER|g" $FJCONFIG_TOOL_FILE
-sed -i "s|/cvmfs/cms.cern.ch/$SCRAM_ARCH/external/fastjet-contrib/$FJCONTRIBVER|$FJINSTALL/|g" $FJCONFIG_TOOL_FILE
+sed -i "s|/cvmfs/cms.cern.ch/$SCRAM_ARCH/external/fastjet-contrib/$FJCONTRIBVER|$FJINSTALL|g" $FJCONFIG_TOOL_FILE
 cat $FJCONFIG_TOOL_FILE
 
 # Fix Fastjet
 FJVER=`fastjet-config --version`
 FJ_TOOL_FILE=$CMSSW_BASE/config/toolbox/$SCRAM_ARCH/tools/selected/fastjet.xml
 sed -i "s|3.1.0|$FJVER|g" $FJ_TOOL_FILE
-sed -i "s|/cvmfs/cms.cern.ch/$SCRAM_ARCH/external/fastjet/$FJVER|$FJINSTALL/|g" $FJ_TOOL_FILE
+sed -i "s|/cvmfs/cms.cern.ch/$SCRAM_ARCH/external/fastjet/$FJVER|$FJINSTALL|g" $FJ_TOOL_FILE
 cat $FJ_TOOL_FILE
-
-ls $FJINSTALL/include/fastjet/ClusterSequence.hh
 
 # The clean is important - it picks up our fastjet installation (but why in clean?!)
 scram b clean
@@ -119,5 +117,7 @@ git clone https://github.com/cms-jet/JECDatabase.git
 cd ${WORKDIR}/SFrame
 source setup.sh
 make $MAKEFLAGS
+# Fix MAkefile to point to correct fastjet
 cd $CMSSW_BASE/src/UHH2
-make -j2
+cp $WORKDIR/Makefile core/
+make $MAKEFLAGS
