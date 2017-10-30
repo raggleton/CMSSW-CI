@@ -35,8 +35,8 @@ export CMSSW_GIT_REFERENCE=$WORKDIR/cmssw.git
 # This means you need to reduce the number passed onto make
 # np=$(grep -c ^processor /proc/cpuinfo)
 # let np/=2
-# export MAKEFLAGS="-j $(grep -c ^processor /proc/cpuinfo)"
-export MAKEFLAGS="-j2"
+export MAKEFLAGS="-j $(grep -c ^processor /proc/cpuinfo)"
+# export MAKEFLAGS="-j2"
 
 # You can use dummy values here if not pushing, but is required for pulling
 git config --global user.name "Joe Bloggs"
