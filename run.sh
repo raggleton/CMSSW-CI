@@ -10,19 +10,20 @@ shopt -s expand_aliases
 # Need to manually setup STIECONF as we're not a proper site
 
 # ls /cvmfs/cms.cern.ch/
-sudo mkdir -p /cvmfs/cms.cern.ch
-mkdir -p /etc/cvmfs/config.d/
-cp default.local /etc/cvmfs/default.local
-cp cms.cern.ch.local /etc/cvmfs/config.d/cms.cern.ch.local
+# sudo mkdir -p /cvmfs/cms.cern.ch
+# mkdir -p /etc/cvmfs/config.d/
+# cp default.local /etc/cvmfs/default.local
+# cp cms.cern.ch.local /etc/cvmfs/config.d/cms.cern.ch.local
 # service autofs restart
 # cvmfs_config reload
-cvmfs_config setup
+# cvmfs_config setup
 # cvmfs_config chksetup
 # test this actually links
-sudo mount -t cvmfs cms.cern.ch /cvmfs/cms.cern.ch
+# sudo mount -t cvmfs cms.cern.ch /cvmfs/cms.cern.ch
 
+# Check CVMSFS
 ls /cvmfs/cms.cern.ch/
-ls -l /cvmfs/cms.cern.ch/SITECONF/local/
+# ls -l /cvmfs/cms.cern.ch/SITECONF/local/
 
 # Store top location
 WORKDIR=`pwd`
@@ -54,14 +55,14 @@ eval `scramv1 runtime -sh`
 
 # git cms-init -y
 # git cms-merge-topic -u cms-met:fromCMSSW_8_0_20_postICHEPfilter
-cp $WORKDIR/test_cfg.py .
-cp $WORKDIR/ttbar_miniaodsim_summer16_v2_PUMoriond17_80X.root .
-scram build $MAKEFLAGS
+# cp $WORKDIR/test_cfg.py .
+# cp $WORKDIR/ttbar_miniaodsim_summer16_v2_PUMoriond17_80X.root .
+# scram build $MAKEFLAGS
 # This won't work due to Valid site-local-config not found at /cvmfs/cms.cern.ch/SITECONF/local/JobConfig/site-local-config.xml
-cmsRun test_cfg.py
-edmDumpEventContent patTuple.root
+# cmsRun test_cfg.py
+# edmDumpEventContent patTuple.root
 
-exit
+# exit
 
 # Setup custom FastJet
 cd ${WORKDIR}
