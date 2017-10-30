@@ -30,7 +30,7 @@ curl -O http://fastjet.hepforge.org/contrib/downloads/fjcontrib-${FJCONTRIBVER}.
 tar xzf fjcontrib-${FJCONTRIBVER}.tar.gz
 cd fjcontrib-${FJCONTRIBVER}
 # add HOTVR from SVN - do it this way until it becomes a proper contrib
-svn co http://fastjet.hepforge.org/svn/contrib/contribs/HOTVR/trunk
+svn co http://fastjet.hepforge.org/svn/contrib/contribs/HOTVR/trunk HOTVR/
 # although we add fastjet-config to path, due to a bug explicitly stating this ensure the necessary fragile library gets built 
 ./configure --fastjet-config=`pwd`/../${FJINSTALLDIR}/bin/fastjet-config CXXFLAGS=-fPIC
 make $MAKEFLAGS
