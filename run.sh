@@ -94,6 +94,8 @@ FJVER=`fastjet-config --version`
 FJ_TOOL_FILE=$CMSSW_BASE/config/toolbox/$SCRAM_ARCH/tools/selected/fastjet.xml
 sed -i "s|3.1.0|$FJVER|g" $FJ_TOOL_FILE
 sed -i "s|/cvmfs/cms.cern.ch/$SCRAM_ARCH/external/fastjet/$FJVER|$FJINSTALL|g" $FJ_TOOL_FILE
+
+# The clean is important - it picks up our fastjet installation (but why in clean?!)
 scram b clean
 scram b $MAKEFLAGS
 
