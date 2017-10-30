@@ -43,8 +43,6 @@ git config --global user.name "Joe Bloggs"
 git config --global user.email "a@b.c"
 git config --global user.github "testUHH"
 
-# time source setup_sframe.sh
-
 # Get a CMSSW release
 source /cvmfs/cms.cern.ch/cmsset_default.sh
 export SCRAM_ARCH=slc6_amd64_gcc530
@@ -63,6 +61,10 @@ eval `scramv1 runtime -sh`
 # edmDumpEventContent patTuple.root
 
 # exit
+
+# Setup SFrame
+cd ${WORKDIR}
+time source setup_sframe.sh
 
 # Setup custom FastJet
 cd ${WORKDIR}
