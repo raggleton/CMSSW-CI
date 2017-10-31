@@ -1,5 +1,12 @@
 #!/bin/bash -e
 
+getToolVersion() {
+    # Get CMSSW tool version using scram
+    # args: <toolname>
+    scram tool info $1 | grep -i "Version : " | sed "s/Version : //"
+}
+
+
 # Print command before executing it - easier for looking at logs
 set -o xtrace
 
@@ -87,24 +94,27 @@ sed -i "s|use_common_bge_for_rho_and_rhom|set_common_bge_for_rho_and_rhom|g" Rec
 
 # Fix fastjet contrib
 # versions are defined in setup_fastjet.sh
-FJCONTRIBVER="1.025"
+OLD_FJCONTRIB_VER=$(getToolVersion fastjet-contrib)
+FJCONTRIB_VER="1.025"
 # CMSSW splits fastjet-contrib into 2 parts - the fragile lib part ("fastjet-contrib")
 # and the other libs ("fastjet-contrib-archive")
 # We have to update both
 FJCONFIG_TOOL_FILE=$CMSSW_BASE/config/toolbox/$SCRAM_ARCH/tools/selected/fastjet-contrib.xml
-sed -i "s|1.020|$FJCONTRIBVER|g" $FJCONFIG_TOOL_FILE
-sed -i "s|/cvmfs/cms.cern.ch/$SCRAM_ARCH/external/fastjet-contrib/$FJCONTRIBVER|$FJINSTALL|g" $FJCONFIG_TOOL_FILE
+sed -i "s|$OLD_FJCONTRIB_VER|$FJCONTRIB_VER|g" $FJCONFIG_TOOL_FILE
+sed -i "s|/cvmfs/cms.cern.ch/$SCRAM_ARCH/external/fastjet-contrib/$FJCONTRIB_VER|$FJINSTALL|g" $FJCONFIG_TOOL_FILE
 cat $FJCONFIG_TOOL_FILE
 
+OLD_FJCONTRIBARCHIVE_VER=$(getToolVersion fastjet-contrib-archive)
 FJCONFIG_ARCHIVE_TOOL_FILE=$CMSSW_BASE/config/toolbox/$SCRAM_ARCH/tools/selected/fastjet-contrib-archive.xml
-sed -i "s|1.020|$FJCONTRIBVER|g" $FJCONFIG_ARCHIVE_TOOL_FILE
-sed -i "s|/cvmfs/cms.cern.ch/$SCRAM_ARCH/external/fastjet-contrib/$FJCONTRIBVER|$FJINSTALL|g" $FJCONFIG_ARCHIVE_TOOL_FILE
+sed -i "s|$OLD_FJCONTRIBARCHIVE_VER|$FJCONTRIB_VER|g" $FJCONFIG_ARCHIVE_TOOL_FILE
+sed -i "s|/cvmfs/cms.cern.ch/$SCRAM_ARCH/external/fastjet-contrib/$FJCONTRIB_VER|$FJINSTALL|g" $FJCONFIG_ARCHIVE_TOOL_FILE
 
 # Fix Fastjet
-FJVER=`fastjet-config --version`
+OLD_FJ_VER=$(getToolVersion fastjet)
+FJ_VER=`fastjet-config --version`
 FJ_TOOL_FILE=$CMSSW_BASE/config/toolbox/$SCRAM_ARCH/tools/selected/fastjet.xml
-sed -i "s|3.1.0|$FJVER|g" $FJ_TOOL_FILE
-sed -i "s|/cvmfs/cms.cern.ch/$SCRAM_ARCH/external/fastjet/$FJVER|$FJINSTALL|g" $FJ_TOOL_FILE
+sed -i "s|$OLD_FJ_VER|$FJ_VER|g" $FJ_TOOL_FILE
+sed -i "s|/cvmfs/cms.cern.ch/$SCRAM_ARCH/external/fastjet/$FJ_VER|$FJINSTALL|g" $FJ_TOOL_FILE
 cat $FJ_TOOL_FILE
 
 # Important - setup the updated tool locations
