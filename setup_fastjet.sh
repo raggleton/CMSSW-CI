@@ -12,7 +12,7 @@ tar xzf fastjet-${FJVER}.tar.gz
 mkdir "${FJINSTALLDIR}"
 cd fastjet-${FJVER}    
 ./configure --prefix="${FJINSTALLDIR}" --enable-allplugins --enable-allcxxplugins CXXFLAGS=-fPIC
-make "$MAKEFLAGS"
+make $MAKEFLAGS
 make check
 make install
 
@@ -34,7 +34,7 @@ cd fjcontrib-${FJCONTRIBVER}
 svn co http://fastjet.hepforge.org/svn/contrib/contribs/HOTVR/trunk HOTVR/
 # although we add fastjet-config to path, due to a bug explicitly stating this ensure the necessary fragile library gets built 
 ./configure --fastjet-config="${FJINSTALLDIR}/bin/fastjet-config" CXXFLAGS=-fPIC
-make "$MAKEFLAGS"
+make $MAKEFLAGS
 make check
 make install
 make fragile-shared

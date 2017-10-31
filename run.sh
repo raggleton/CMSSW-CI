@@ -128,7 +128,7 @@ scram setup fastjet-contrib
 scram setup fastjet-contrib-archive
 
 scram b clean
-time scram b "$MAKEFLAGS"
+time scram b $MAKEFLAGS
 
 cd "$CMSSW_BASE/external/$SCRAM_ARCH/"
 git clone https://github.com/ikrav/RecoEgamma-ElectronIdentification.git data/RecoEgamma/ElectronIdentification/data
@@ -149,6 +149,6 @@ cat "$CMSSW_BASE/src/UHH2/common/Makefile"
 # Compile SFrame and UHH
 cd "${WORKDIR}/SFrame"
 source setup.sh
-time make "$MAKEFLAGS"
+time make $MAKEFLAGS
 cd "$CMSSW_BASE/src/UHH2"
-time make "$MAKEFLAGS"
+time make $MAKEFLAGS
