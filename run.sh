@@ -137,12 +137,16 @@ git clone -b RunII_80X_v3 https://github.com/UHH2/UHH2.git
 cd UHH2
 git clone https://github.com/cms-jet/JECDatabase.git
 
+# Fix Makefile to point to correct fastjet
+mv $WORKDIR/coreMakefile $CMSSW_BASE/src/UHH2/core/Makefile
+cat $CMSSW_BASE/src/UHH2/core/Makefile
+# Fix Makefile to point to be more generic
+mv $WORKDIR/commonMakefile $CMSSW_BASE/src/UHH2/common/Makefile
+cat $CMSSW_BASE/src/UHH2/common/Makefile
+
 # Compile SFrame and UHH
 cd ${WORKDIR}/SFrame
 source setup.sh
 make $MAKEFLAGS
 cd $CMSSW_BASE/src/UHH2
-# Fix Makefile to point to correct fastjet
-mv $WORKDIR/coreMakefile core/Makefile
-cat $CMSSW_BASE/src/UHH2/core/Makefile
 make $MAKEFLAGS
