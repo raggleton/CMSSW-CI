@@ -1,0 +1,5 @@
+*.tar.gz
+SFrame
+CMSSW_*
+fastjet*
+fjcontrib*
