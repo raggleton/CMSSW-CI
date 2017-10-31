@@ -110,6 +110,7 @@ OLD_FJCONTRIBARCHIVE_VER=$(getToolVersion fastjet-contrib-archive)
 FJCONFIG_ARCHIVE_TOOL_FILE=$CMSSW_BASE/config/toolbox/$SCRAM_ARCH/tools/selected/fastjet-contrib-archive.xml
 sed -i "s|$OLD_FJCONTRIBARCHIVE_VER|$FJCONTRIB_VER|g" $FJCONFIG_ARCHIVE_TOOL_FILE
 sed -i "s|/cvmfs/cms.cern.ch/$SCRAM_ARCH/external/fastjet-contrib/$FJCONTRIB_VER|$FJINSTALL|g" $FJCONFIG_ARCHIVE_TOOL_FILE
+cat $FJCONFIG_ARCHIVE_TOOL_FILE
 
 # Fix Fastjet
 OLD_FJ_VER=$(getToolVersion fastjet)
