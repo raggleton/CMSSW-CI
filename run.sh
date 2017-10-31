@@ -88,10 +88,17 @@ sed -i "s|use_common_bge_for_rho_and_rhom|set_common_bge_for_rho_and_rhom|g" Rec
 # Fix fastjet contrib
 # versions are defined in setup_fastjet.sh
 FJCONTRIBVER="1.025"
+# CMSSW splits fastjet-contrib into 2 parts - the fragile lib part ("fastjet-contrib")
+# and the other libs ("fastjet-contrib-archive")
+# We have to update both
 FJCONFIG_TOOL_FILE=$CMSSW_BASE/config/toolbox/$SCRAM_ARCH/tools/selected/fastjet-contrib.xml
 sed -i "s|1.020|$FJCONTRIBVER|g" $FJCONFIG_TOOL_FILE
 sed -i "s|/cvmfs/cms.cern.ch/$SCRAM_ARCH/external/fastjet-contrib/$FJCONTRIBVER|$FJINSTALL|g" $FJCONFIG_TOOL_FILE
 cat $FJCONFIG_TOOL_FILE
+
+FJCONFIG_ARCHIVE_TOOL_FILE=$CMSSW_BASE/config/toolbox/$SCRAM_ARCH/tools/selected/fastjet-contrib-archive.xml
+sed -i "s|1.020|$FJCONTRIBVER|g" $FJCONFIG_ARCHIVE_TOOL_FILE
+sed -i "s|/cvmfs/cms.cern.ch/$SCRAM_ARCH/external/fastjet-contrib/$FJCONTRIBVER|$FJINSTALL|g" $FJCONFIG_ARCHIVE_TOOL_FILE
 
 # Fix Fastjet
 FJVER=`fastjet-config --version`
@@ -100,7 +107,11 @@ sed -i "s|3.1.0|$FJVER|g" $FJ_TOOL_FILE
 sed -i "s|/cvmfs/cms.cern.ch/$SCRAM_ARCH/external/fastjet/$FJVER|$FJINSTALL|g" $FJ_TOOL_FILE
 cat $FJ_TOOL_FILE
 
-# The clean is important - it picks up our fastjet installation (but why in clean?!)
+# Important - setup the updated tool locations
+scram setup fastjet
+scram setup fastjet-contrib
+scram setup fastjet-contrib-archive
+
 scram b clean
 scram b $MAKEFLAGS
 
@@ -119,5 +130,5 @@ source setup.sh
 make $MAKEFLAGS
 # Fix Makefile to point to correct fastjet
 cd $CMSSW_BASE/src/UHH2
-mv $WORKDIR/Makefile core/Makefile
+mv $WORKDIR/coreMakefile core/Makefile
 make $MAKEFLAGS
