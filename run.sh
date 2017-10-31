@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/usr/bin/env bash
 
 getToolVersion() {
     # Get CMSSW tool version using scram
@@ -6,9 +6,11 @@ getToolVersion() {
     scram tool info $1 | grep -i "Version : " | sed "s/Version : //"
 }
 
-
-# Print command before executing it - easier for looking at logs
-set -o xtrace
+# Some better practices:
+set -o xtrace # Print command before executing it - easier for looking at logs
+set -o errexit # make your script exit when a command fails.
+set -o pipefail # exit status of the last command that threw a non-zero exit code is returned
+set -o nounset # exit when your script tries to use undeclared variables.
 
 # CRUCIAL for cmsrel, etc as aliases not expanded in non-interactive shells
 shopt -s expand_aliases
