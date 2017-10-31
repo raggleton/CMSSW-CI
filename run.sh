@@ -141,7 +141,8 @@ git clone https://github.com/cms-jet/JECDatabase.git
 cd ${WORKDIR}/SFrame
 source setup.sh
 make $MAKEFLAGS
-# Fix Makefile to point to correct fastjet
 cd $CMSSW_BASE/src/UHH2
+# Fix Makefile to point to correct fastjet
 mv $WORKDIR/coreMakefile core/Makefile
+cat $CMSSW_BASE/src/UHH2/core/Makefile
 make $MAKEFLAGS
