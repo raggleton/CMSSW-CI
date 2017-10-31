@@ -9,3 +9,4 @@ USERCXXFLAGS := -I${FJINC}
 
 TEST := 1
 TESTPAR := 1
+include ../Makefile.common
