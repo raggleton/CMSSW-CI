@@ -17,9 +17,9 @@ shopt -s expand_aliases
 mkdir -p /etc/cvmfs/config.d/
 cp default.local /etc/cvmfs/default.local
 cp cms.cern.ch.local /etc/cvmfs/config.d/cms.cern.ch.local
-# service autofs restart
-cvmfs_config reload
-cvmfs_config setup
+service autofs restart
+# cvmfs_config reload
+# cvmfs_config setup
 # cvmfs_config chksetup
 # test this actually links
 mount -t cvmfs cms.cern.ch /cvmfs/cms.cern.ch
