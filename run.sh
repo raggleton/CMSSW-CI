@@ -7,13 +7,6 @@ getToolVersion() {
     scram tool info "$toolname" | grep -i "Version : " | sed "s/Version : //"
 }
 
-runDateTimeCmd() {
-    # Run command with timing
-    echo "Starting" $(date +"%T") "for" $@
-    time "$@"
-    echo "Ending" $(date +"%T")
-}
-
 # Some better practices:
 set -o xtrace # Print command before executing it - easier for looking at logs
 set -o errexit # make your script exit when a command fails.
@@ -82,20 +75,20 @@ eval "$(scramv1 runtime -sh)"
 
 # Setup SFrame
 cd "${WORKDIR}"
-runDateTimeCmd source setup_sframe.sh
+time source setup_sframe.sh
 
 # Setup custom FastJet
 cd "${WORKDIR}"
-runDateTimeCmd source setup_fastjet.sh
+time source setup_fastjet.sh
 
 # Now setup all packages, etc
 cd $CMSSW_VERSION/src
-runDateTimeCmd git cms-init -y
+time git cms-init -y
 # Additional MET filters
-runDateTimeCmd git cms-merge-topic -u cms-met:fromCMSSW_8_0_20_postICHEPfilter
+time git cms-merge-topic -u cms-met:fromCMSSW_8_0_20_postICHEPfilter
 # why this? why not gregor's PR? https://github.com/cms-sw/cmssw/pull/14837
-runDateTimeCmd git cms-merge-topic gkasieczka:test-httv2-8014
-runDateTimeCmd git cms-merge-topic ikrav:egm_id_80X_v2
+time git cms-merge-topic gkasieczka:test-httv2-8014
+time git cms-merge-topic ikrav:egm_id_80X_v2
 # Do we actually need these?
 # git-cms-addpkg RecoBTag
 # git-cms-addpkg PhysicsTools
@@ -135,7 +128,7 @@ scram setup fastjet-contrib
 scram setup fastjet-contrib-archive
 
 scram b clean
-runDateTimeCmd scram b $MAKEFLAGS
+time scram b $MAKEFLAGS
 
 cd "$CMSSW_BASE/external/$SCRAM_ARCH/"
 git clone https://github.com/ikrav/RecoEgamma-ElectronIdentification.git data/RecoEgamma/ElectronIdentification/data
@@ -156,6 +149,6 @@ cat "$CMSSW_BASE/src/UHH2/common/Makefile"
 # Compile SFrame and UHH
 cd "${WORKDIR}/SFrame"
 source setup.sh
-runDateTimeCmd make $MAKEFLAGS
+time make $MAKEFLAGS
 cd "$CMSSW_BASE/src/UHH2"
-runDateTimeCmd make $MAKEFLAGS
+time make $MAKEFLAGS
