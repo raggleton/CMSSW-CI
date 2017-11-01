@@ -7,7 +7,9 @@
 myjob:
   tags:
     - cvmfs
-
+  cache:
+    paths:
+    - cmssw.git
   script:
     # simple check to make sure even the basics are there
     - which git
