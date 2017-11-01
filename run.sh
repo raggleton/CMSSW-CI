@@ -54,7 +54,7 @@ git config --global user.name "Joe Bloggs"
 git config --global user.email "a@b.c"
 git config --global user.github "testUHH"
 
-# Get a CMSSW release
+# Get a CMSSW release - need to do this first to get ROOT, compilers, etc
 source /cvmfs/cms.cern.ch/cmsset_default.sh
 export SCRAM_ARCH=slc6_amd64_gcc530
 CMSSW_VERSION=CMSSW_8_0_24_patch1
