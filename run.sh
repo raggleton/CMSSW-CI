@@ -60,10 +60,13 @@ eval "$(scramv1 runtime -sh)"
 
 # Setup SFrame
 cd "${WORKDIR}"
-time source setup_sframe.sh
+FJ_VER="3.2.1"
+FJCONTRIB_VER="1.025"
+time source setup_sframe.sh "$FJ_VER" "$FJCONTRIB_VER"
 
 # Setup custom FastJet
 cd "${WORKDIR}"
+
 time source setup_fastjet.sh
 
 # Now setup all packages, etc
@@ -82,12 +85,10 @@ FJINSTALL=$(fastjet-config --prefix)
 sed -i "s|use_common_bge_for_rho_and_rhom|set_common_bge_for_rho_and_rhom|g" RecoJets/JetProducers/plugins/FastjetJetProducer.cc
 
 # Fix fastjet contrib
-# versions are defined in setup_fastjet.sh
-OLD_FJCONTRIB_VER=$(getToolVersion fastjet-contrib)
-FJCONTRIB_VER="1.025"
 # CMSSW splits fastjet-contrib into 2 parts - the fragile lib part ("fastjet-contrib")
 # and the other libs ("fastjet-contrib-archive")
 # We have to update both
+OLD_FJCONTRIB_VER=$(getToolVersion fastjet-contrib)
 FJCONFIG_TOOL_FILE=$CMSSW_BASE/config/toolbox/$SCRAM_ARCH/tools/selected/fastjet-contrib.xml
 sed -i "s|$OLD_FJCONTRIB_VER|$FJCONTRIB_VER|g" "$FJCONFIG_TOOL_FILE"
 sed -i "s|/cvmfs/cms.cern.ch/$SCRAM_ARCH/external/fastjet-contrib/$FJCONTRIB_VER|$FJINSTALL|g" "$FJCONFIG_TOOL_FILE"
@@ -101,7 +102,6 @@ cat "$FJCONFIG_ARCHIVE_TOOL_FILE"
 
 # Fix Fastjet
 OLD_FJ_VER=$(getToolVersion fastjet)
-FJ_VER=$(fastjet-config --version)
 FJ_TOOL_FILE=$CMSSW_BASE/config/toolbox/$SCRAM_ARCH/tools/selected/fastjet.xml
 sed -i "s|$OLD_FJ_VER|$FJ_VER|g" "$FJ_TOOL_FILE"
 sed -i "s|/cvmfs/cms.cern.ch/$SCRAM_ARCH/external/fastjet/$FJ_VER|$FJINSTALL|g" "$FJ_TOOL_FILE"
