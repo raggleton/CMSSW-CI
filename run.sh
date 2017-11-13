@@ -1,5 +1,14 @@
 #!/usr/bin/env bash
 
+# Some better practices:
+set -o xtrace # Print command before executing it - easier for looking at logs
+set -o errexit # make your script exit when a command fails.
+set -o pipefail # exit status of the last command that threw a non-zero exit code is returned
+# set -o nounset # exit when your script tries to use undeclared variables. can't use as external scripts will fail
+
+# CRUCIAL for cmsrel, etc as aliases not expanded in non-interactive shells
+shopt -s expand_aliases
+
 getToolVersion() {
     # Get CMSSW tool version using scram
     # args: <toolname>
@@ -19,15 +28,6 @@ setGitSetting() {
         git config --global "$settingName" "$newValue"
     fi
 }
-
-# Some better practices:
-set -o xtrace # Print command before executing it - easier for looking at logs
-set -o errexit # make your script exit when a command fails.
-set -o pipefail # exit status of the last command that threw a non-zero exit code is returned
-# set -o nounset # exit when your script tries to use undeclared variables. can't use as external scripts will fail
-
-# CRUCIAL for cmsrel, etc as aliases not expanded in non-interactive shells
-shopt -s expand_aliases
 
 # Check CVMSFS
 ls /cvmfs/cms.cern.ch/
