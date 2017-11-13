@@ -7,6 +7,19 @@ getToolVersion() {
     scram tool info "$toolname" | grep -i "Version : " | sed "s/Version : //"
 }
 
+setGitSetting() {
+    # Check if git config setting is blank, if so set it to a value
+    # args: <setting name> <new value>
+    settingName="$1"
+    newValue="$2"
+    ans=$(git config --global "$settingName")
+    if [ "$ans" == "" ]
+    then
+        echo "git $settingName not set - setting it to $newValue"
+        git config --global "$settingName" "$newValue"
+    fi
+}
+
 # Some better practices:
 set -o xtrace # Print command before executing it - easier for looking at logs
 set -o errexit # make your script exit when a command fails.
@@ -49,10 +62,10 @@ export MAKEFLAGS
 MAKEFLAGS="-j $(grep -c ^processor /proc/cpuinfo)"
 # export MAKEFLAGS="-j2"
 
-# You can use dummy values here if not pushing, but is required for pulling
-git config --global user.name "Joe Bloggs"
-git config --global user.email "a@b.c"
-git config --global user.github "testUHH"
+# Required for pulling
+setGitSetting "user.name" "Joe Bloggs"
+setGitSetting "user.email" "a@b.c"
+setGitSetting "user.github" "testUHH"
 
 # Get a CMSSW release - need to do this first to get ROOT, compilers, etc
 source /cvmfs/cms.cern.ch/cmsset_default.sh
