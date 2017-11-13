@@ -58,9 +58,8 @@ export CMSSW_GIT_REFERENCE=$WORKDIR/cmssw.git
 # This means you need to reduce the number passed onto make
 # np=$(grep -c ^processor /proc/cpuinfo)
 # let np/=2
-export MAKEFLAGS
+export MAKEFLAGS="-j9"
 MAKEFLAGS="-j $(grep -c ^processor /proc/cpuinfo)"
-# export MAKEFLAGS="-j2"
 
 # Required for pulling
 setGitSetting "user.name" "Joe Bloggs"

@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-export MAKEFLAGS
+export MAKEFLAGS="-j9"
 MAKEFLAGS="-j $(grep -c ^processor /proc/cpuinfo)"
 
 # Setup fastjet & fastjet-contrib
