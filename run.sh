@@ -81,7 +81,6 @@ time git cms-merge-topic ikrav:egm_id_80X_v2
 # git-cms-addpkg RecoBTag
 # git-cms-addpkg PhysicsTools
 
-FJINSTALL=$(fastjet-config --prefix)
 sed -i "s|use_common_bge_for_rho_and_rhom|set_common_bge_for_rho_and_rhom|g" RecoJets/JetProducers/plugins/FastjetJetProducer.cc
 
 # Fix fastjet contrib
@@ -90,6 +89,7 @@ sed -i "s|use_common_bge_for_rho_and_rhom|set_common_bge_for_rho_and_rhom|g" Rec
 # We have to update both
 OLD_FJCONTRIB_VER=$(getToolVersion fastjet-contrib)
 FJCONFIG_TOOL_FILE=$CMSSW_BASE/config/toolbox/$SCRAM_ARCH/tools/selected/fastjet-contrib.xml
+FJINSTALL=$(fastjet-config --prefix)
 sed -i "s|$OLD_FJCONTRIB_VER|$FJCONTRIB_VER|g" "$FJCONFIG_TOOL_FILE"
 sed -i "s|/cvmfs/cms.cern.ch/$SCRAM_ARCH/external/fastjet-contrib/$FJCONTRIB_VER|$FJINSTALL|g" "$FJCONFIG_TOOL_FILE"
 cat "$FJCONFIG_TOOL_FILE"
