@@ -1,7 +1,5 @@
 #!/bin/bash -e
 
-set -u
-
 # Run before install script to ensure vars set, etc
 # CRUCIAL for cmsrel, etc as aliases not expanded in non-interactive shells
 shopt -s expand_aliases
