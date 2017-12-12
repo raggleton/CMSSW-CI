@@ -26,6 +26,8 @@ setGitSetting() {
     fi
 }
 
+echo "Doing pre_install"
+
 # Check CVMSFS
 ls /cvmfs/cms.cern.ch/
 
