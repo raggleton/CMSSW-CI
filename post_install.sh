@@ -5,7 +5,7 @@ cd $WORKDIR
 
 # Run after the install script to setup things correctly
 rm -rf "$CMSSW_BASE/src/UHH2"
-mv $WORKDIR/UHH2 $CMSSW_BASE/src
+mv /app/UHH2 $CMSSW_BASE/src
 ls $CMSSW_BASE/src
 
 # Compile SFrame and UHH
