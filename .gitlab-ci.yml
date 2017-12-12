@@ -1,7 +1,14 @@
+variables:
+  DOCKER_DRIVER: overlay2
+
+services:
+- docker:dind
+
 # before_script:
 #   - yum install -y sudo
 #   - sudo yum install -y https://ecsft.cern.ch/dist/cvmfs/cvmfs-release/cvmfs-release-latest.noarch.rpm
 #   - sudo yum update -y && sudo yum install -y cvmfs cvmfs-config-default
+
 before_script:
   - docker info
 
