@@ -45,6 +45,8 @@ export CMSSW_GIT_REFERENCE=$WORKDIR/cmssw.git
 export MAKEFLAGS="-j9"
 MAKEFLAGS="-j $(grep -c ^processor /proc/cpuinfo)"
 
+git config -l --global
+
 # Required for pulling
 setGitSetting "user.name" "Joe Bloggs"
 setGitSetting "user.email" "a@b.c"
