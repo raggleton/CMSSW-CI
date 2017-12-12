@@ -15,4 +15,9 @@ time make $MAKEFLAGS
 cd "$CMSSW_BASE/src/UHH2"
 ls
 echo "I will scram build here"
+./nothere
+if [ ! -e "blah.txt" ];
+then
+	exit 1
+fi
 # time make $MAKEFLAGS
