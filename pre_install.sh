@@ -35,8 +35,6 @@ ls /cvmfs/cms.cern.ch/
 export WORKDIR=$(pwd)
 
 export CMSSW_GIT_REFERENCE=$WORKDIR/cmssw.git
-export MAKEFLAGS="-j9"
-MAKEFLAGS="-j $(grep -c ^processor /proc/cpuinfo)"
 
 # Required for pulling
 setGitSetting "user.name" "Joe Bloggs"

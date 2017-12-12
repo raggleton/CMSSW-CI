@@ -1,9 +1,10 @@
 #!/bin/bash -e
 
-set -u
-
 echo "Doing install"
 ls
+
+export MAKEFLAGS="-j9"
+MAKEFLAGS="-j $(grep -c ^processor /proc/cpuinfo)"
 
 source /cvmfs/cms.cern.ch/cmsset_default.sh
 export SCRAM_ARCH=slc6_amd64_gcc630

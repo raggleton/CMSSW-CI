@@ -1,7 +1,5 @@
 #!/bin/bash -e
 
-set -u
-
 echo "Doing post_install"
 
 # Run after the install script to setup things correctly
