@@ -6,4 +6,4 @@ WORKDIR /app
 
 ADD . /app
 
-CMD ["/bin/bash", "-c", "source pre_install.sh && source setup_sframe.sh && source minimal_install.sh && source post_install.sh"]
+CMD ["/bin/bash", "-c", "source /app/pre_install.sh && source /app/setup_sframe.sh && source /app/minimal_install.sh && source /app/post_install.sh"]

@@ -1,6 +1,7 @@
 #!/bin/bash -e
 
 echo "Doing post_install"
+cd $WORKDIR
 
 # Run after the install script to setup things correctly
 rm -rf "$CMSSW_BASE/src/UHH2"
