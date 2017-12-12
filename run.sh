@@ -21,11 +21,11 @@ setGitSetting() {
     # args: <setting name> <new value>
     settingName="$1"
     newValue="$2"
-    ans=$(git config --global "$settingName")
+    ans=$(git config --local "$settingName")
     if [ "$ans" == "" ]
     then
         echo "git $settingName not set - setting it to $newValue"
-        git config --global "$settingName" "$newValue"
+        git config --local "$settingName" "$newValue"
     fi
 }
 
@@ -45,7 +45,7 @@ export CMSSW_GIT_REFERENCE=$WORKDIR/cmssw.git
 export MAKEFLAGS="-j9"
 MAKEFLAGS="-j $(grep -c ^processor /proc/cpuinfo)"
 
-git config -l --global
+git config -l --local
 
 # Required for pulling
 setGitSetting "user.name" "Joe Bloggs"
