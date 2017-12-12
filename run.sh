@@ -21,11 +21,11 @@ setGitSetting() {
     # args: <setting name> <new value>
     settingName="$1"
     newValue="$2"
-    ans=$(git config --local "$settingName")
+    ans=$(git config "$settingName")
     if [ "$ans" == "" ]
     then
         echo "git $settingName not set - setting it to $newValue"
-        git config --local "$settingName" "$newValue"
+        git config "$settingName" "$newValue"
     fi
 }
 
