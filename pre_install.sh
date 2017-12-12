@@ -35,6 +35,6 @@ export WORKDIR=$(pwd)
 export CMSSW_GIT_REFERENCE=$WORKDIR/cmssw.git
 
 # Required for pulling
-setGitSetting "user.name" "Joe Bloggs"
-setGitSetting "user.email" "a@b.c"
+setGitSetting "user.name" "Jim Hopper"
+setGitSetting "user.email" "jane@ives.com"
 setGitSetting "user.github" "testUHH"
