@@ -8,7 +8,10 @@
 # before_script:
   # - rpm --rebuilddb && yum install -y svn git glibc gcc
 
+
 myjob:
+  tags:
+    - cvmfs
   cache:
     paths:
     - cmssw.git
