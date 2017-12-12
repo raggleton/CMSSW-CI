@@ -14,6 +14,8 @@ if [ "$#" -eq 2 ]
 then
     FJVER="$1"
     FJCONTRIBVER="$2"
+else
+    echo "You didn't specify 2 arguments, using default versions"
 fi
 
 echo "Deploying fastjet $FJVER and fastjet-contrib $FJCONTRIBVER"
