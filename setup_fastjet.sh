@@ -40,9 +40,9 @@ cd ..
 export PATH="${FJINSTALLDIR}/bin":$PATH
 
 # Test fastjet
-ls
-g++ short-example.cc -o short-example `fastjet-config --cxxflags --libs --plugins`
-./short-example
+# ls
+# g++ short-example.cc -o short-example `fastjet-config --cxxflags --libs --plugins`
+# ./short-example
 
 
 curl -O http://fastjet.hepforge.org/contrib/downloads/fjcontrib-${FJCONTRIBVER}.tar.gz
