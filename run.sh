@@ -22,7 +22,7 @@ setGitSetting() {
     settingName="$1"
     newValue="$2"
     ans=$(git config "$settingName")
-    if [ "$ans" == "" ]
+    if [ -z "$ans" ]
     then
         echo "git $settingName not set - setting it to $newValue"
         git config "$settingName" "$newValue"
