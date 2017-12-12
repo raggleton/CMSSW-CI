@@ -19,7 +19,7 @@ script:
   # To use the pre-built image:
   # - sudo docker run --privileged --name myCI -ti -v $PWD:/app raggleton/mycmssw:test
   # ad hoc one:
-  - sudo docker run --privileged --name myCI -ti -v $PWD:/app mycmssw
+  - sudo docker run --privileged --name myCI -ti mycmssw
 
 notifications:
   email:

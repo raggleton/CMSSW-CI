@@ -6,4 +6,4 @@ WORKDIR /app
 
 ADD . /app
 
-CMD ["/bin/bash", "-c", "source run.sh"]
+CMD ["/bin/bash", "-c", "source pre_install.sh;", "source minimal_install.sh", "source post_install"]
