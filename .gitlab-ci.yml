@@ -15,6 +15,10 @@ myjob:
   cache:
     paths:
     - cmssw.git
+  before_script:
+    - ls -lh && pwd
+    - cd ..
+    - pwd
   script:
     # simple check to make sure even the basics are there
     - which git
