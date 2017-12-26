@@ -2,7 +2,7 @@
 
 # Some better practices:
 set -o xtrace # Print command before executing it - easier for looking at logs
-set -o errexit # make your script exit when a command fails.
+# set -o errexit # make your script exit when a command fails.
 set -o pipefail # exit status of the last command that threw a non-zero exit code is returned
 # set -o nounset # exit when your script tries to use undeclared variables. can't use as external scripts will fail
 
@@ -45,7 +45,10 @@ export CMSSW_GIT_REFERENCE=$WORKDIR/cmssw.git
 export MAKEFLAGS="-j9"
 MAKEFLAGS="-j $(grep -c ^processor /proc/cpuinfo)"
 
-git config -l
+# git config -l
+ls ~/.gitconfig
+ls $HOME/.config/git/config
+ls $XDG_CONFIG_HOME/git/config
 
 # Required for pulling
 # setGitSetting "user.name" "Joe Bloggs"
