@@ -51,6 +51,10 @@ MAKEFLAGS="-j $(grep -c ^processor /proc/cpuinfo)"
 # ls $XDG_CONFIG_HOME/git/config
 
 # Required for pulling
+git config --global user.name 'Joe Bloggs'
+git config --global user.email a@b.c
+git config --global user.github testUHH
+
 # setGitSetting "user.name" "Joe Bloggs"
 # setGitSetting "user.email" "a@b.c"
 # setGitSetting "user.github" "testUHH"
