@@ -46,9 +46,9 @@ export MAKEFLAGS="-j9"
 MAKEFLAGS="-j $(grep -c ^processor /proc/cpuinfo)"
 
 # git config -l
-ls ~/.gitconfig
-ls $HOME/.config/git/config
-ls $XDG_CONFIG_HOME/git/config
+# ls ~/.gitconfig  ~ = /root
+# ls $HOME/.config/git/config
+# ls $XDG_CONFIG_HOME/git/config
 
 # Required for pulling
 # setGitSetting "user.name" "Joe Bloggs"
