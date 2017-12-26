@@ -50,7 +50,7 @@ git config -l
 # Required for pulling
 # setGitSetting "user.name" "Joe Bloggs"
 # setGitSetting "user.email" "a@b.c"
-setGitSetting "user.github" "testUHH"
+# setGitSetting "user.github" "testUHH"
 
 # Get a CMSSW release - need to do this first to get ROOT, compilers, etc
 source /cvmfs/cms.cern.ch/cmsset_default.sh
