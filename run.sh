@@ -11,7 +11,8 @@ shopt -s expand_aliases
 
 source /cvmfs/cms.cern.ch/cmsset_default.sh
 ls /etc/
-ls /etc/cvmfs/
+mkdir -p /etc/cvmfs/config.d/
+
 
 # Check CVMSFS setup correctly
 # Need to manually setup STIECONF as we're not a proper site
