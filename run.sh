@@ -9,6 +9,9 @@ set -o pipefail # exit status of the last command that threw a non-zero exit cod
 # CRUCIAL for cmsrel, etc as aliases not expanded in non-interactive shells
 shopt -s expand_aliases
 
+source /cvmfs/cms.cern.ch/cmsset_default.sh
+ls -R /etc/cvmfs/config.d
+
 # Check CVMSFS setup correctly
 # Need to manually setup STIECONF as we're not a proper site
 echo "export CMS_LOCAL_SITE=/etc/cms/SITECONF/T2_DE_DESY" > /etc/cvmfs/config.d/cms.cern.ch.local
@@ -176,7 +179,6 @@ git config --global user.email "a@b.c"
 git config --global user.github "testUHH"
 
 # Get a CMSSW release
-source /cvmfs/cms.cern.ch/cmsset_default.sh
 export SCRAM_ARCH=slc6_amd64_gcc530
 CMSSW_VERSION=CMSSW_8_0_24_patch1
 eval "$(cmsrel $CMSSW_VERSION)"
