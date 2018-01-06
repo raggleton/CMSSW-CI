@@ -14,15 +14,15 @@ shopt -s expand_aliases
 
 # ls /cvmfs/cms.cern.ch/
 # sudo mkdir -p /cvmfs/cms.cern.ch
-mkdir -p /etc/cvmfs/config.d/
-cp default.local /etc/cvmfs/default.local
-cp cms.cern.ch.local /etc/cvmfs/config.d/cms.cern.ch.local
-service autofs restart
+# mkdir -p /etc/cvmfs/config.d/
+# cp default.local /etc/cvmfs/default.local
+# cp cms.cern.ch.local /etc/cvmfs/config.d/cms.cern.ch.local
+# service autofs restart
 # cvmfs_config reload
 # cvmfs_config setup
 # cvmfs_config chksetup
 # test this actually links
-mount -t cvmfs cms.cern.ch /cvmfs/cms.cern.ch
+# mount -t cvmfs cms.cern.ch /cvmfs/cms.cern.ch
 
 # Check CVMSFS
 ls /cvmfs/cms.cern.ch/
@@ -55,7 +55,7 @@ eval "$(cmsrel $CMSSW_VERSION)"
 cd $CMSSW_VERSION/src
 eval "$(scramv1 runtime -sh)"
 
-git cms-init -y
+# git cms-init -y
 cp $WORKDIR/test_cfg.py .
 cp $WORKDIR/ttbar_miniaodsim_summer16_v2_PUMoriond17_80X.root .
 scram build $MAKEFLAGS
