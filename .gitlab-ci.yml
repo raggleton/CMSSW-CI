@@ -1,5 +1,5 @@
 # image: gitlab-registry.cern.ch/ci-tools/ci-worker:slc6
-image: raggleton/setupcvmfs:v1
+# image: raggleton/setupcvmfs:v1
 
 # before_script:
 #   - yum install -y sudo
