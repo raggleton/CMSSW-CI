@@ -10,7 +10,8 @@ set -o pipefail # exit status of the last command that threw a non-zero exit cod
 shopt -s expand_aliases
 
 source /cvmfs/cms.cern.ch/cmsset_default.sh
-ls -R /etc/cvmfs/config.d
+ls /etc/
+ls /etc/cvmfs/
 
 # Check CVMSFS setup correctly
 # Need to manually setup STIECONF as we're not a proper site
