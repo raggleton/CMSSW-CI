@@ -14,148 +14,78 @@ ls /etc/
 mkdir -p /etc/cvmfs/config.d/
 
 
-# Check CVMSFS setup correctly
-# Need to manually setup STIECONF as we're not a proper site
-echo "export CMS_LOCAL_SITE=/etc/cms/SITECONF/T2_DE_DESY" > /etc/cvmfs/config.d/cms.cern.ch.local
 # Hack for CMSSW bug (?)
 ln -s /cvmfs/cms.cern.ch/SITECONF /etc/cvmfs/SITECONF
-mkdir -p /etc/cms/SITECONF/T2_DE_DESY/{JobConfig,PhEDEx}
-ln -s T2_DE_DESY /etc/cms/SITECONF/local
+
+# Avoid xroot client warnings
+touch /etc/profile.d/xrootd-protocol.sh
+echo '
+export XrdSecPROTOCOL=unix
+' > /etc/profile.d/xrootd-protocol.sh
+
+
+# Manual SITECONF, ideally at some point part of /cvmfs/cms.cern.ch
+mkdir -p /etc/cms/SITECONF/T2_UK_London_IC/{JobConfig,PhEDEx}
+ln -s T2_UK_London_IC /etc/cms/SITECONF/local
 echo '
 <storage-mapping>
+  <lfn-to-pfn protocol="root" destination-match=".*"
+    path-match="(.*)" result="root://eospublic.cern.ch/$1"/>
+  <lfn-to-pfn protocol="xrootd" destination-match=".*" chain="root"
+    path-match="(.*)" result="$1"/>
 
-<!-- Specific for Load Test 07 input files-->
-  <lfn-to-pfn protocol="srm"
-    path-match=".*/LoadTest07_DESY_(.*)_.*_.*"
-    result="srm://dcache-se-cms.desy.de:8443/srm/managerv1?SFN=/pnfs/desy.de/cms/tier2/store/phedex_monarctest/monarctest_DESY/MonarcTest_DESY_$1"/>
-<!-- For SRM2 -->
-  <lfn-to-pfn protocol="srmv2"
-    path-match=".*/LoadTest07_DESY_(.*)_.*_.*"
-    result="srm://dcache-se-cms.desy.de:8443/srm/managerv2?SFN=/pnfs/desy.de/cms/tier2/store/phedex_monarctest/monarctest_DESY/MonarcTest_DESY_$1"/>
+  <!-- fallback xrootd rules -->
+  <lfn-to-pfn protocol="xrootd-uk2" destination-match=".*"
+    path-match="(.*)" result="root://xrootd-uk-cms.gridpp.rl.ac.uk/$1"/>
+  <lfn-to-pfn protocol="xrootd-eu" destination-match=".*"
+    path-match="(.*)" result="root://xrootd.ba.infn.it/$1"/>
+  <!-- combine all fallbacks into 1 rule, cmssw can only have 1 fallback -->
+  <!-- server chain stops when one server responds - even if it does not have
+the file -->
+  <lfn-to-pfn protocol="fallbacks" destination-match=".*"
+   path-match="(.*)"
+result="root://cms-xrd-global.cern.ch,xrootd.ba.infn.it,xrootd.unl.edu/$1?tried=gfe02.grid.hep.ph.ic.ac.uk"/>
 
-<!-- DCMS MC production -->
-  <lfn-to-pfn protocol="direct"
-    path-match="/+store/DCMS/(.*)"
-    result="/pnfs/desy.de/cms/analysis/dcms/$1"/>
-  <lfn-to-pfn protocol="direct"
-    path-match="/+store/unmerged/DCMS/(.*)"
-    result="/pnfs/desy.de/cms/analysis/dcms/unmerged/$1"/>
-  <pfn-to-lfn protocol="direct"
-    path-match="/pnfs/desy.de/cms/analysis/dcms/unmerged/(.*)"
-    result="/store/unmerged/DCMS/$1"/>
-  <pfn-to-lfn protocol="direct"
-    path-match="/pnfs/desy.de/cms/analysis/dcms/(.*)"
-    result="/store/DCMS/$1"/>
-
-<!-- Special directories -->
-  <lfn-to-pfn protocol="srm"
-    path-match="/+store/PhEDEx_LoadTest07/(.*)"
-    result="srm://dcache-se-cms.desy.de:8443/srm/managerv1?SFN=/pnfs/desy.de/cms/tier2/loadtest/$1"/>
-  <pfn-to-lfn protocol="direct"
-    path-match="/pnfs/desy.de/cms/tier2/loadtest/(.*)"
-    result="/store/PhEDEx_LoadTest07/$1"/>
-<!-- For SRM2 -->
-  <lfn-to-pfn protocol="srmv2"
-    path-match="/+store/PhEDEx_LoadTest07/(.*)"
-    result="srm://dcache-se-cms.desy.de:8443/srm/managerv2?SFN=/pnfs/desy.de/cms/tier2/loadtest/$1"/>
-
-<!-- unmerged/temp directories -->
-  <lfn-to-pfn protocol="direct"
-    path-match="/+store/unmerged/(.*)"
-    result="/pnfs/desy.de/cms/tier2/unmerged/$1"/>
-  <pfn-to-lfn protocol="direct"
-    path-match="/pnfs/desy.de/cms/tier2/unmerged/(.*)"
-    result="/store/unmerged/$1"/>
-  <lfn-to-pfn protocol="direct"
-    path-match="/+store/temp/(.*)"
-    result="/pnfs/desy.de/cms/tier2/temp/$1"/>
-  <pfn-to-lfn protocol="direct"
-    path-match="/pnfs/desy.de/cms/tier2/temp/(.*)"
-    result="/store/temp/$1"/>
-
-<!-- Open JobRobot sample via xrootd - dirty hack! -->
-  <lfn-to-pfn protocol="dcap"
-    path-match="/+store/mc/JobRobot/(.*)"
-    result="root://dcache-cms-xrootd.desy.de/pnfs/desy.de/cms/tier2/store/mc/JobRobot/$1"/>
-  <lfn-to-pfn protocol="dcap"
-    path-match="/+store/mc/CMSSW_4_2_3/RelValProdTTbar/GEN-SIM-RECO/MC_42_V12_JobRobot-v1/(.*)"
-    result="root://dcache-cms-xrootd.desy.de/pnfs/desy.de/cms/tier2/store/mc/CMSSW_4_2_3/RelValProdTTbar/GEN-SIM-RECO/MC_42_V12_JobRobot-v1/$1"/>
-
-<!-- Normal stuff here -->
- <!-- remote xrootd fallback via European redirector -->
-  <lfn-to-pfn protocol="remote-xrootd"
-    path-match="/+store/(.*)"
-    result="root://xrootd-cms.infn.it//store/$1"/>
-  <pfn-to-lfn protocol="remote-xrootd"
-    path-match="/+store/(.*)"
-    result="/store/$1"/>
- <!-- End of redirector stuff --> 
-  <lfn-to-pfn protocol="direct"
-    path-match="/+(.*)"
-    result="/pnfs/desy.de/cms/tier2/$1"/>
-  <lfn-to-pfn protocol="dcap" chain="direct"
-    path-match="(.*)"
-    result="dcap://dcache-cms-dcap.desy.de/$1"/>
-  <lfn-to-pfn protocol="gsidcap" chain="direct"
-    path-match="(.*)"
-    result="gsidcap://dcache-cms-gsidcap.desy.de:22128/$1"/>
-  <lfn-to-pfn protocol="srm" chain="direct"
-    path-match="(.*)"
-    result="srm://dcache-se-cms.desy.de:8443/srm/managerv1?SFN=$1"/>
-  <pfn-to-lfn protocol="direct"
-    path-match="/pnfs/desy.de/cms/tier2/(.*)"
-    result="/$1"/>
-  <pfn-to-lfn protocol="srm" chain="direct"
-    path-match=".*\?SFN=(.*)"
-    result="$1"/>
-<!-- For SRM2 -->
-  <lfn-to-pfn protocol="srmv2" chain="direct"
-    path-match="(.*)"
-    result="srm://dcache-se-cms.desy.de:8443/srm/managerv2?SFN=$1"/>
-  <pfn-to-lfn protocol="srmv2" chain="direct"
-    path-match=".*\?SFN=(.*)"
-    result="$1"/>
+  <pfn-to-lfn protocol="direct" destination-match=".*"
+    path-match=".*(/store/.*)" result="$1"/>
+  <pfn-to-lfn protocol="root" destination-match=".*" chain="direct"
+    path-match="(.*)" result="$1"/>
+  <pfn-to-lfn protocol="xrootd" destination-match=".*" chain="root"
+    path-match="(.*)" result="$1"/>
 </storage-mapping>
-' > /etc/cms/SITECONF/T2_DE_DESY/PhEDEx/storage.xml
+' > /etc/cms/SITECONF/T2_UK_London_IC/PhEDEx/storage.xml
 echo '
 <site-local-config>
- <site name="T2_DE_DESY">
-    <event-data>
-      <catalog url="trivialcatalog_file:/cvmfs/cms.cern.ch/SITECONF/local/PhEDEx/storage.xml?protocol=dcap"/>
-      <catalog url="trivialcatalog_file:/cvmfs/cms.cern.ch/SITECONF/local/PhEDEx/storage.xml?protocol=remote-xrootd"/>
-    </event-data>
-    <source-config>
-      <statistics-destination name="cms-udpmon-collector.cern.ch:9331" />
-    </source-config>
-    <local-stage-out>
-      <command value="gfal2"/>
-      <catalog url="trivialcatalog_file:/cvmfs/cms.cern.ch/SITECONF/local/PhEDEx/storage.xml?protocol=srmv2"/>
-      <se-name value="dcache-se-cms.desy.de"/>
-      <phedex-node value="T2_DE_DESY"/>
-    </local-stage-out>
-    <fallback-stage-out>
-      <se-name value="grid-srm.physik.rwth-aachen.de"/>
-      <phedex-node value="T2_DE_RWTH"/>
-      <lfn-prefix value="srm://grid-srm.physik.rwth-aachen.de:8443/srm/managerv2?SFN=/pnfs/physik.rwth-aachen.de/cms"/>
-      <command value="gfal2"/>
-    </fallback-stage-out>
-    <calib-data>
-      <frontier-connect>
-        <load balance="proxies"/>
-        <proxy url="http://grid-squid02.desy.de:3128"/>
-        <proxy url="http://grid-squid04.desy.de:3128"/>
-        <proxy url="http://grid-squid06.desy.de:3128"/>
-        <backupproxy url="http://cmsbpfrontier.cern.ch:3128"/>
-        <backupproxy url="http://cmsbproxy.fnal.gov:3128"/>
-        <server url="http://cmsfrontier.cern.ch:8000/FrontierInt"/>
-        <server url="http://cmsfrontier1.cern.ch:8000/FrontierInt"/>
-        <server url="http://cmsfrontier2.cern.ch:8000/FrontierInt"/>
-        <server url="http://cmsfrontier3.cern.ch:8000/FrontierInt"/>
-      </frontier-connect>
-    </calib-data>
- </site>
- </site-local-config>
-' > /etc/cms/SITECONF/T2_DE_DESY/JobConfig/site-local-config.xml
+        <site name="T2_UK_London_IC">
+        <event-data>
+                <catalog
+url="trivialcatalog_file:/etc/cvmfs/SITECONF/local/PhEDEx/storage.xml?protocol=root"/>
+                <catalog
+url="trivialcatalog_file:/etc/cvmfs/SITECONF/local/PhEDEx/storage.xml?protocol=fallbacks"/>
+        </event-data>
+                <calib-data>
+                        <frontier-connect>
+                                <proxy
+url="http://squid02.gridpp.rl.ac.uk:3128"/>
+                                <proxy
+url="http://squid03.gridpp.rl.ac.uk:3128"/>
+                                <proxy
+url="http://squid04.gridpp.rl.ac.uk:3128"/>
+                                <proxy
+url="http://squid05.gridpp.rl.ac.uk:3128"/>
+                                <server
+url="http://cmsfrontier.cern.ch:8000/FrontierInt"/>
+                                <server
+url="http://cmsfrontier1.cern.ch:8000/FrontierInt"/>
+                                <server
+url="http://cmsfrontier2.cern.ch:8000/FrontierInt"/>
+                               <server
+url="http://cmsfrontier3.cern.ch:8000/FrontierInt"/>
+                        </frontier-connect>
+        </calib-data>
+        </site>
+</site-local-config>
+' > /etc/cms/SITECONF/T2_UK_London_IC/JobConfig/site-local-config.xml
 
 # Check CVMSFS
 ls /cvmfs/cms.cern.ch/
