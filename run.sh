@@ -12,10 +12,9 @@ shopt -s expand_aliases
 source /cvmfs/cms.cern.ch/cmsset_default.sh
 ls /etc/
 mkdir -p /etc/cvmfs/config.d/
+mkdir -p /etc/cms/
 
 
-# Hack for CMSSW bug (?)
-ln -s /cvmfs/cms.cern.ch/SITECONF /etc/cvmfs/SITECONF
 
 # Avoid xroot client warnings
 touch /etc/profile.d/xrootd-protocol.sh
@@ -26,7 +25,7 @@ export XrdSecPROTOCOL=unix
 
 # Manual SITECONF, ideally at some point part of /cvmfs/cms.cern.ch
 mkdir -p /etc/cms/SITECONF/T2_UK_London_IC/{JobConfig,PhEDEx}
-ln -s T2_UK_London_IC /etc/cms/SITECONF/local
+ln -s /etc/cms/SITECONF/T2_UK_London_IC /etc/cms/SITECONF/local
 echo '
 <storage-mapping>
   <lfn-to-pfn protocol="root" destination-match=".*"
@@ -59,9 +58,9 @@ echo '
         <site name="T2_UK_London_IC">
         <event-data>
                 <catalog
-url="trivialcatalog_file:/etc/cvmfs/SITECONF/local/PhEDEx/storage.xml?protocol=root"/>
+url="trivialcatalog_file:/etc/cms/SITECONF/local/PhEDEx/storage.xml?protocol=root"/>
                 <catalog
-url="trivialcatalog_file:/etc/cvmfs/SITECONF/local/PhEDEx/storage.xml?protocol=fallbacks"/>
+url="trivialcatalog_file:/etc/cms/SITECONF/local/PhEDEx/storage.xml?protocol=fallbacks"/>
         </event-data>
                 <calib-data>
                         <frontier-connect>
@@ -86,6 +85,9 @@ url="http://cmsfrontier3.cern.ch:8000/FrontierInt"/>
         </site>
 </site-local-config>
 ' > /etc/cms/SITECONF/T2_UK_London_IC/JobConfig/site-local-config.xml
+
+# Hack for CMSSW bug (?)
+ln -s /cvmfs/cms.cern.ch/SITECONF /etc/cms/SITECONF
 
 # Check CVMSFS
 ls /cvmfs/cms.cern.ch/
