@@ -39,7 +39,7 @@ scram build $MAKEFLAGS
 # cmsRun won't work out of the box due to Valid site-local-config not found at /cvmfs/cms.cern.ch/SITECONF/local/JobConfig/site-local-config.xml
 # Looks for site-local-config.xml from CMS_PATH...let's hack it
 # Don't worry, this won't affect anything else
-export CMS_PATH=/cvmfs/cms-ib.cern.ch/week0
+export CMS_PATH=/cvmfs/cms-ib.cern.ch/
 cmsRun test_cfg.py
 edmDumpEventContent patTuple.root
 
