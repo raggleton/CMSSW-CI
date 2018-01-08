@@ -1,33 +1,23 @@
 # CMSSW-CI
 
-This branch is for running on CERN's gitlab with gitlab-ci.
+This branch is a bare-bones example for running on CERN's GitLab with gitlab-ci.
 
 To get things to run, we just need a `.gitlab-ci.yml`.
 
-To get CMSSW etc runing we need: SLC6 + CVMFS (to get all the software). This is easy to setup - we don't even need to fiddle with docker.
+More info at: https://twiki.cern.ch/twiki/bin/view/Main/RobinGitlabCICMSSW
 
-To use CVMSFS in gitlab just add:
+## Notes
+
+- To get CMSSW etc runing we need: SLC6 + CVMFS (to get all the software). This is easy to setup - we don't even need to fiddle with docker.
+
+- To use CVMSFS in gitlab just need:
 
 ```yaml
 tags:
     - cvmfs
 ```
 
-The SLC6 part comes for free (or do I have to specify it vs cc7?).
-
-More info at: https://twiki.cern.ch/twiki/bin/view/Main/RobinGitlabCICMSSW
-
-## Notes
-
-- Also note that in the `script` part of `.gitlab-ci.yml`, each line is executed in its own shell. So doing:
-
-```yaml
-script:
-    - source /cvmfs/cms.cern.ch/cmsset_default.sh
-    - cmsrel CMSSW_X_Y_Z
-```
-
-won't work, because even if setup.sh defines cmsrel, it won't persist until the next line AFAICT.
+- The SLC6 part comes for free (or do I have to specify it vs cc7?).
 
 - Have to set `user.name`, `user.github`, `user.email` in git global config before doing `cmsrel`.
 
@@ -38,6 +28,8 @@ won't work, because even if setup.sh defines cmsrel, it won't persist until the 
 ```
 Valid site-local-config not found at /cvmfs/cms.cern.ch/SITECONF/local/JobConfig/site-local-config.xml
 ```
+
+Normally one would set `CMS_LOCAL_SITE` in `/etc/cvmfs/config.d/cms.cern.ch.local` then do `cvmfs_config reload`, but we are not allowed to do that.
 
 ## Links
 
