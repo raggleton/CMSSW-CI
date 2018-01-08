@@ -10,8 +10,8 @@ set -o pipefail # exit status of the last command that threw a non-zero exit cod
 shopt -s expand_aliases
 
 # Manual SITECONF
-mkdir -p /etc/cms/SITECONF/T2_UK_London_IC/{JobConfig,PhEDEx}
-ln -s /etc/cms/SITECONF/T2_UK_London_IC /etc/cms/SITECONF/local
+mkdir -p /etc/cms/SITECONF/local/{JobConfig,PhEDEx}
+# ln -s /etc/cms/SITECONF/T2_UK_London_IC /etc/cms/SITECONF/local
 echo '
 <storage-mapping>
   <lfn-to-pfn protocol="root" destination-match=".*" path-match="(.*)" result="root://eospublic.cern.ch/$1"/>
@@ -28,7 +28,7 @@ echo '
   <pfn-to-lfn protocol="root" destination-match=".*" chain="direct" path-match="(.*)" result="$1"/>
   <pfn-to-lfn protocol="xrootd" destination-match=".*" chain="root" path-match="(.*)" result="$1"/>
 </storage-mapping>
-' > /etc/cms/SITECONF/T2_UK_London_IC/PhEDEx/storage.xml
+' > /etc/cms/SITECONF/local/PhEDEx/storage.xml
 echo '
 <site-local-config>
         <site name="T2_UK_London_IC">
@@ -50,9 +50,9 @@ echo '
         </calib-data>
         </site>
 </site-local-config>
-' > /etc/cms/SITECONF/T2_UK_London_IC/JobConfig/site-local-config.xml
+' > /etc/cms/SITECONF/local/JobConfig/site-local-config.xml
 
-# Check CVMSFS
+# Check CVMFS
 ls /cvmfs/cms.cern.ch/
 
 # Store top location
