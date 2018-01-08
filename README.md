@@ -23,13 +23,13 @@ tags:
 
 - Must also use `shopt -s expand_aliases` in bash script to use aliases e.g. `cmsrel`.
 
-- Need to configure cmsRun to use our own `site-local-config.xml` & `storage.xml` files, do this by changing `CMS_PATH` before running `cmsRun`. This avoids the error:
+- Need to configure cmsRun to use dummy `site-local-config.xml` & `storage.xml` files, do this by changing `CMS_PATH` before running `cmsRun`. This avoids the error:
 
 ```
 Valid site-local-config not found at /cvmfs/cms.cern.ch/SITECONF/local/JobConfig/site-local-config.xml
 ```
 
-Normally one would set `CMS_LOCAL_SITE` in `/etc/cvmfs/config.d/cms.cern.ch.local` then do `cvmfs_config reload`, but we are not allowed to do that.
+Normally one would set `CMS_LOCAL_SITE` in `/etc/cvmfs/config.d/cms.cern.ch.local` then do `cvmfs_config reload`, but we are not allowed to do that. We do it in the same way cms-bot does it.
 
 ## Links
 
@@ -43,3 +43,4 @@ Normally one would set `CMS_LOCAL_SITE` in `/etc/cvmfs/config.d/cms.cern.ch.loca
 - https://gitlab.cern.ch/help/ci/docker/using_docker_images.md#overwrite-image-and-services
 - https://docs.gitlab.com/ee/ci/yaml/README.html
 - https://gitlab.cern.ch/help/user/project/container_registry
+- https://github.com/cms-sw/cms-bot/commit/d9aafc1cb411bd96702bb14333e064fd3f1a72d5
