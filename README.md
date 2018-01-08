@@ -4,7 +4,7 @@ This branch is for running on CERN's gitlab with gitlab-ci.
 
 To get things to run, we just need a `.gitlab-ci.yml`.
 
-To get CMSSW etc runing we need: SLC6 + CVMFS (to get all the software). This is easy to setup - we don't even need a docker image (yet).
+To get CMSSW etc runing we need: SLC6 + CVMFS (to get all the software). This is easy to setup - we don't even need to fiddle with docker.
 
 To use CVMSFS in gitlab just add:
 
@@ -14,6 +14,8 @@ tags:
 ```
 
 The SLC6 part comes for free (or do I have to specify it vs cc7?).
+
+More info at: https://twiki.cern.ch/twiki/bin/view/Main/RobinGitlabCICMSSW
 
 ## Notes
 
@@ -27,9 +29,15 @@ script:
 
 won't work, because even if setup.sh defines cmsrel, it won't persist until the next line AFAICT.
 
+- Have to set `user.name`, `user.github`, `user.email` in git global config before doing `cmsrel`.
 
-- gitlab comes with it's own docker image registry, which may prove useful...
+- Must also use `shopt -s expand_aliases` in bash script to use aliases e.g. `cmsrel`.
 
+- Need to configure cmsRun to use our own `site-local-config.xml` & `storage.xml` files, do this by changing `CMS_PATH` before running `cmsRun`. This avoids the error:
+
+```
+Valid site-local-config not found at /cvmfs/cms.cern.ch/SITECONF/local/JobConfig/site-local-config.xml
+```
 
 ## Links
 
