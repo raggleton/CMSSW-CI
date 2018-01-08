@@ -54,19 +54,12 @@ echo '
 # Check CVMFS
 ls /cvmfs/cms.cern.ch/
 
-# Store top location
 WORKDIR=$(pwd)
 
 export CMSSW_GIT_REFERENCE=$WORKDIR/cmssw.git
 
 # Get number of processors for make
-# Sometimes compiling will error with c++: internal compiler error: Killed (program cc1plus)
-# This means you need to reduce the number passed onto make
-# np=$(grep -c ^processor /proc/cpuinfo)
-# let np/=2
-export MAKEFLAGS
 MAKEFLAGS="-j $(grep -c ^processor /proc/cpuinfo)"
-# export MAKEFLAGS="-j2"
 
 # You can use dummy values here if not pushing, but is required for pulling
 git config --global user.name "Joe Bloggs"
@@ -81,11 +74,11 @@ eval "$(cmsrel $CMSSW_VERSION)"
 cd $CMSSW_VERSION/src
 eval "$(scramv1 runtime -sh)"
 
-# git cms-init -y
 cp $WORKDIR/test_cfg.py .
 cp $WORKDIR/ttbar_miniaodsim_summer16_v2_PUMoriond17_80X.root .
 scram build $MAKEFLAGS
-# This won't work out of the box due to Valid site-local-config not found at /cvmfs/cms.cern.ch/SITECONF/local/JobConfig/site-local-config.xml
+
+# cmsRun won't work out of the box due to Valid site-local-config not found at /cvmfs/cms.cern.ch/SITECONF/local/JobConfig/site-local-config.xml
 # Looks for site-local-config.xml from CMS_PATH...let's hack it
 # Don't worry, this won't affect anything else
 export CMS_PATH=/etc/cms/
