@@ -11,7 +11,6 @@ shopt -s expand_aliases
 
 # Manual SITECONF
 mkdir -p /etc/cms/SITECONF/local/{JobConfig,PhEDEx}
-# ln -s /etc/cms/SITECONF/T2_UK_London_IC /etc/cms/SITECONF/local
 echo '
 <storage-mapping>
   <lfn-to-pfn protocol="root" destination-match=".*" path-match="(.*)" result="root://eospublic.cern.ch/$1"/>
