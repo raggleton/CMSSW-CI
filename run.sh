@@ -9,41 +9,24 @@ set -o pipefail # exit status of the last command that threw a non-zero exit cod
 # CRUCIAL for cmsrel, etc as aliases not expanded in non-interactive shells
 shopt -s expand_aliases
 
-source /cvmfs/cms.cern.ch/cmsset_default.sh
-
-# Avoid xroot client warnings
-touch /etc/profile.d/xrootd-protocol.sh
-echo '
-export XrdSecPROTOCOL=unix
-' > /etc/profile.d/xrootd-protocol.sh
-# Manual SITECONF, ideally at some point part of /cvmfs/cms.cern.ch
+# Manual SITECONF
 mkdir -p /etc/cms/SITECONF/T2_UK_London_IC/{JobConfig,PhEDEx}
 ln -s /etc/cms/SITECONF/T2_UK_London_IC /etc/cms/SITECONF/local
 echo '
 <storage-mapping>
-  <lfn-to-pfn protocol="root" destination-match=".*"
-    path-match="(.*)" result="root://eospublic.cern.ch/$1"/>
-  <lfn-to-pfn protocol="xrootd" destination-match=".*" chain="root"
-    path-match="(.*)" result="$1"/>
+  <lfn-to-pfn protocol="root" destination-match=".*" path-match="(.*)" result="root://eospublic.cern.ch/$1"/>
+  <lfn-to-pfn protocol="xrootd" destination-match=".*" chain="root" path-match="(.*)" result="$1"/>
 
   <!-- fallback xrootd rules -->
-  <lfn-to-pfn protocol="xrootd-uk2" destination-match=".*"
-    path-match="(.*)" result="root://xrootd-uk-cms.gridpp.rl.ac.uk/$1"/>
-  <lfn-to-pfn protocol="xrootd-eu" destination-match=".*"
-    path-match="(.*)" result="root://xrootd.ba.infn.it/$1"/>
+  <lfn-to-pfn protocol="xrootd-uk2" destination-match=".*" path-match="(.*)" result="root://xrootd-uk-cms.gridpp.rl.ac.uk/$1"/>
+  <lfn-to-pfn protocol="xrootd-eu" destination-match=".*" path-match="(.*)" result="root://xrootd.ba.infn.it/$1"/>
   <!-- combine all fallbacks into 1 rule, cmssw can only have 1 fallback -->
-  <!-- server chain stops when one server responds - even if it does not have
-the file -->
-  <lfn-to-pfn protocol="fallbacks" destination-match=".*"
-   path-match="(.*)"
-result="root://cms-xrd-global.cern.ch,xrootd.ba.infn.it,xrootd.unl.edu/$1?tried=gfe02.grid.hep.ph.ic.ac.uk"/>
+  <!-- server chain stops when one server responds - even if it does not have the file -->
+  <lfn-to-pfn protocol="fallbacks" destination-match=".*" path-match="(.*)" result="root://cms-xrd-global.cern.ch,xrootd.ba.infn.it,xrootd.unl.edu/$1?tried=gfe02.grid.hep.ph.ic.ac.uk"/>
 
-  <pfn-to-lfn protocol="direct" destination-match=".*"
-    path-match=".*(/store/.*)" result="$1"/>
-  <pfn-to-lfn protocol="root" destination-match=".*" chain="direct"
-    path-match="(.*)" result="$1"/>
-  <pfn-to-lfn protocol="xrootd" destination-match=".*" chain="root"
-    path-match="(.*)" result="$1"/>
+  <pfn-to-lfn protocol="direct" destination-match=".*" path-match=".*(/store/.*)" result="$1"/>
+  <pfn-to-lfn protocol="root" destination-match=".*" chain="direct" path-match="(.*)" result="$1"/>
+  <pfn-to-lfn protocol="xrootd" destination-match=".*" chain="root" path-match="(.*)" result="$1"/>
 </storage-mapping>
 ' > /etc/cms/SITECONF/T2_UK_London_IC/PhEDEx/storage.xml
 echo '
@@ -69,12 +52,8 @@ echo '
 </site-local-config>
 ' > /etc/cms/SITECONF/T2_UK_London_IC/JobConfig/site-local-config.xml
 
-# # Hack for CMSSW bug (?)
-# ln -s /cvmfs/cms.cern.ch/SITECONF /etc/cms/SITECONF
-
 # Check CVMSFS
 ls /cvmfs/cms.cern.ch/
-ls -l /cvmfs/cms.cern.ch/SITECONF/
 
 # Store top location
 WORKDIR=$(pwd)
@@ -93,9 +72,10 @@ MAKEFLAGS="-j $(grep -c ^processor /proc/cpuinfo)"
 # You can use dummy values here if not pushing, but is required for pulling
 git config --global user.name "Joe Bloggs"
 git config --global user.email "a@b.c"
-git config --global user.github "testUHH"
+git config --global user.github "test"
 
 # Get a CMSSW release
+source /cvmfs/cms.cern.ch/cmsset_default.sh
 export SCRAM_ARCH=slc6_amd64_gcc530
 CMSSW_VERSION=CMSSW_8_0_24_patch1
 eval "$(cmsrel $CMSSW_VERSION)"
@@ -106,8 +86,9 @@ eval "$(scramv1 runtime -sh)"
 cp $WORKDIR/test_cfg.py .
 cp $WORKDIR/ttbar_miniaodsim_summer16_v2_PUMoriond17_80X.root .
 scram build $MAKEFLAGS
-# This won't work due to Valid site-local-config not found at /cvmfs/cms.cern.ch/SITECONF/local/JobConfig/site-local-config.xml
+# This won't work out of the box due to Valid site-local-config not found at /cvmfs/cms.cern.ch/SITECONF/local/JobConfig/site-local-config.xml
 # Looks for site-local-config.xml from CMS_PATH...let's hack it
+# Don't worry, this won't affect anything else
 export CMS_PATH=/etc/cms/
 cmsRun test_cfg.py
 edmDumpEventContent patTuple.root
