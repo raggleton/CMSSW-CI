@@ -4,5 +4,8 @@ myjob:
   script:
     # simple check to make sure even the basics are there
     - which git
+    # get kerberos ticket to access AFS, EOS etc
+    - echo "${KRB_PASSWORD}" | kinit ${KRB_USERNAME}@CERN.CH
+    - klist
     # Now the main action
     - source run.sh

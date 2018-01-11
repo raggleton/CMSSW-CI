@@ -10,17 +10,12 @@ process.options.allowUnscheduled = cms.untracked.bool(False)
 process.load("FWCore.MessageLogger.MessageLogger_cfi")
 process.MessageLogger.cerr.FwkReport.reportEvery = 10
 
-process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_condDBv2_cff')
-process.load("Configuration.StandardSequences.GeometryRecoDB_cff")
-
-process.GlobalTag.globaltag = '80X_mcRun2_asymptotic_2016_TrancheIV_v8'
-
 process.analysis = cms.Path()
 
 # INPUT
 process.source = cms.Source("PoolSource",
     secondaryFileNames = cms.untracked.vstring(),
-    fileNames = cms.untracked.vstring('file:ttbar_miniaodsim_summer16_v2_PUMoriond17_80X.root'),
+    fileNames = cms.untracked.vstring('file:2017B_JetHT_EC3BBDF0-C7CD-E711-A70B-0025905A6092_small.root'),
 )
 
 # OUTPUT
