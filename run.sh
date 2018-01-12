@@ -40,6 +40,7 @@ scram build $MAKEFLAGS
 # Looks for site-local-config.xml from CMS_PATH...let's hack it
 # Don't worry, this won't affect anything else
 export CMS_PATH=/cvmfs/cms-ib.cern.ch/
+klist
 scp ${KRB_USERNAME}@lxplus.cern.ch:/afs/cern.ch/work/${KRB_USERNAME:0:1}/${KRB_USERNAME}/ExampleRootFiles/2017B_MINIAOD_DATA/2017B_JetHT_EC3BBDF0-C7CD-E711-A70B-0025905A6092_small.root 2017B_JetHT_EC3BBDF0-C7CD-E711-A70B-0025905A6092_small.root
 cmsRun test_cfg.py
 edmDumpEventContent patTuple.root
