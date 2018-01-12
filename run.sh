@@ -26,8 +26,8 @@ git config --global user.github "test"
 
 # Get a CMSSW release
 source /cvmfs/cms.cern.ch/cmsset_default.sh
-export SCRAM_ARCH=slc6_amd64_gcc530
-CMSSW_VERSION=CMSSW_8_0_24_patch1
+export SCRAM_ARCH=slc6_amd64_gcc630
+CMSSW_VERSION=CMSSW_9_4_1
 eval "$(cmsrel $CMSSW_VERSION)"
 cd $CMSSW_VERSION/src
 eval "$(scramv1 runtime -sh)"
